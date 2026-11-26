@@ -30,7 +30,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col justify-between">
       <Header />
 
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-8 px-6 py-4">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-8 px-6 py-4 sm:px-10">
         {!hydrated ? (
           <div className="h-[220px] w-full max-w-4xl" />
         ) : showResults ? (

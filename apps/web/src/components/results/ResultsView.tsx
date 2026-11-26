@@ -42,7 +42,7 @@ export function ResultsView() {
   return (
     <section
       aria-label="Test results"
-      className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-2 py-2"
+      className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-2 py-2"
     >
       {/* Completion Header */}
       <div className="flex flex-col gap-4">

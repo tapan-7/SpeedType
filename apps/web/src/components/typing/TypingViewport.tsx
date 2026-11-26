@@ -12,9 +12,9 @@ import {
 import type { WordEntry } from '@speedtype/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 
-const LINE_HEIGHT_PX = 52;
-const CARET_HEIGHT_PX = 36;
-const CARET_TOP_OFFSET_PX = 8;
+const LINE_HEIGHT_PX = 60;
+const CARET_HEIGHT_PX = 42;
+const CARET_TOP_OFFSET_PX = 9;
 
 function getCharColorClass(status: CharacterStatus): string {
   switch (status) {
@@ -207,7 +207,7 @@ export function TypingViewport() {
   return (
     <section
       aria-label="Typing practice area"
-      className="mx-auto flex w-full max-w-4xl flex-col items-center gap-6"
+      className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6"
     >
       <div
         onClick={handleContainerClick}
@@ -246,7 +246,7 @@ export function TypingViewport() {
           <div
             ref={wordsContainerRef}
             style={{ transform: `translate3d(0, -${scrollOffset}px, 0)` }}
-            className="relative flex flex-wrap content-start gap-x-4 font-mono text-[28px] leading-[52px] tracking-normal transition-transform duration-150 ease-out sm:text-[32px]"
+            className="relative flex flex-wrap content-start gap-x-5 font-mono text-[30px] leading-[60px] tracking-normal transition-transform duration-150 ease-out sm:text-[36px] lg:text-[40px]"
           >
             {renderCaret()}
 

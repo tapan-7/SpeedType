@@ -27,8 +27,8 @@ export function LiveStatsRow() {
   const progressLabel = config.mode === TestMode.TIME ? 'sec' : 'words';
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-4">
-      <div className="flex items-center justify-center gap-10 sm:gap-16">
+    <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-4">
+      <div className="flex items-center justify-center gap-12 sm:gap-20">
         <StatBadge
           label="wpm"
           value={isRunning ? liveWpm : '—'}
@@ -44,7 +44,7 @@ export function LiveStatsRow() {
           highlight={isRunning && config.mode === TestMode.TIME}
         />
       </div>
-      <div className="h-px w-full max-w-2xl bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
+      <div className="h-px w-full max-w-4xl bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
     </div>
   );
 }

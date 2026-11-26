@@ -17,7 +17,7 @@ export function Header() {
   const isTyping = status === TestStatus.RUNNING && preferences.focusFadeOut;
 
   return (
-    <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-5">
+    <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
       <button
         type="button"
         onClick={restart}
