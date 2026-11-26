@@ -60,6 +60,10 @@ export const FONT_OPTIONS: readonly { id: FontFamily; label: string }[] = [
   { id: FontFamily.JETBRAINS_MONO, label: 'JetBrains Mono' },
   { id: FontFamily.FIRA_CODE, label: 'Fira Code' },
   { id: FontFamily.GEIST_MONO, label: 'Geist Mono' },
+  { id: FontFamily.IBM_PLEX_MONO, label: 'IBM Plex Mono' },
+  { id: FontFamily.SPACE_MONO, label: 'Space Mono' },
+  { id: FontFamily.ROBOTO_MONO, label: 'Roboto Mono' },
+  { id: FontFamily.INCONSOLATA, label: 'Inconsolata' },
   { id: FontFamily.SYSTEM_MONO, label: 'System Mono' },
 ];
 

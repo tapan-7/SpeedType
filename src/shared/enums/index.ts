@@ -51,6 +51,10 @@ export enum FontFamily {
   JETBRAINS_MONO = 'jetbrains-mono',
   FIRA_CODE = 'fira-code',
   GEIST_MONO = 'geist-mono',
+  IBM_PLEX_MONO = 'ibm-plex-mono',
+  SPACE_MONO = 'space-mono',
+  ROBOTO_MONO = 'roboto-mono',
+  INCONSOLATA = 'inconsolata',
   SYSTEM_MONO = 'system-mono',
 }
 

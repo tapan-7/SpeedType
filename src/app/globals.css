@@ -275,6 +275,22 @@
   --st-font-typing: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
+:root[data-font='ibm-plex-mono'] {
+  --st-font-typing: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='space-mono'] {
+  --st-font-typing: var(--font-space-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='roboto-mono'] {
+  --st-font-typing: var(--font-roboto-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='inconsolata'] {
+  --st-font-typing: var(--font-inconsolata), ui-monospace, SFMono-Regular, monospace;
+}
+
 :root[data-font='system-mono'] {
   --st-font-typing: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
@@ -318,7 +334,7 @@ html,
 body {
   background-color: var(--st-bg-primary);
   color: var(--st-text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--st-font-typing);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

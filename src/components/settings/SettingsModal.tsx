@@ -148,10 +148,10 @@ export function SettingsModal() {
               <>
                 {matches('theme color palette') && (
                   <div className="rounded-2xl border border-border-subtle bg-white/[0.02] p-4">
-                    <div className="mb-3.5 text-xs font-medium text-text-secondary">
+                    <div className="mb-3 text-xs font-medium text-text-secondary">
                       Theme
                     </div>
-                    <div className="grid grid-cols-5 gap-x-2 gap-y-3.5">
+                    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-5">
                       {THEME_OPTIONS.map((t) => {
                         const active = preferences.theme === t.id;
                         return (
@@ -159,26 +159,28 @@ export function SettingsModal() {
                             key={t.id}
                             type="button"
                             onClick={() => updatePreferences({ theme: t.id })}
-                            className="group flex flex-col items-center gap-1.5 focus:outline-none"
+                            style={{ backgroundColor: t.bg }}
+                            className={`group relative flex flex-col justify-between gap-2 overflow-hidden rounded-xl p-2.5 text-left transition-all duration-150 focus:outline-none ${
+                              active
+                                ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg-elevated'
+                                : 'ring-1 ring-white/10 hover:ring-white/25'
+                            }`}
                           >
-                            <span
-                              style={{ backgroundColor: t.bg }}
-                              className={`flex h-9 w-9 items-center justify-center rounded-full transition-transform duration-150 group-hover:scale-105 ${
-                                active
-                                  ? 'ring-2 ring-accent ring-offset-2 ring-offset-bg-elevated'
-                                  : 'ring-1 ring-white/15'
-                              }`}
-                            >
+                            <div className="flex w-full items-center justify-between">
                               <span
-                                className="h-2.5 w-2.5 rounded-full"
+                                className="text-xs font-semibold"
+                                style={{ color: t.accent }}
+                              >
+                                Aa
+                              </span>
+                              <span
+                                className="h-2 w-5 rounded-full"
                                 style={{ backgroundColor: t.accent }}
                               />
-                            </span>
+                            </div>
                             <span
-                              className={`text-[11px] ${
-                                active
-                                  ? 'font-medium text-text-primary'
-                                  : 'text-text-muted group-hover:text-text-secondary'
+                              className={`text-[11px] font-medium ${
+                                t.isLight ? 'text-zinc-800' : 'text-zinc-200'
                               }`}
                             >
                               {t.label}
@@ -190,22 +192,29 @@ export function SettingsModal() {
                   </div>
                 )}
 
-                {matches('font typeface typography jetbrains fira geist system') && (
+                {matches('font typeface typography jetbrains fira geist ibm space roboto inconsolata system') && (
                   <div className="rounded-2xl border border-border-subtle bg-white/[0.02] p-4">
-                    <div className="mb-3 text-xs font-medium text-text-secondary">
-                      Font
+                    <div className="mb-3 flex items-center justify-between">
+                      <span className="text-xs font-medium text-text-secondary">
+                        Font
+                      </span>
+                      <span className="text-[11px] text-text-muted">
+                        Applied across app &amp; typing prompt
+                      </span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                       {FONT_OPTIONS.map((font) => {
                         const active = preferences.fontFamily === font.id;
-                        const fontVarStyle =
-                          font.id === 'jetbrains-mono'
-                            ? 'var(--font-jetbrains-mono)'
-                            : font.id === 'fira-code'
-                              ? 'var(--font-fira-code)'
-                              : font.id === 'geist-mono'
-                                ? 'var(--font-geist-mono)'
-                                : 'ui-monospace, monospace';
+                        const fontVarMap: Record<string, string> = {
+                          'jetbrains-mono': 'var(--font-jetbrains-mono)',
+                          'fira-code': 'var(--font-fira-code)',
+                          'geist-mono': 'var(--font-geist-mono)',
+                          'ibm-plex-mono': 'var(--font-ibm-plex-mono)',
+                          'space-mono': 'var(--font-space-mono)',
+                          'roboto-mono': 'var(--font-roboto-mono)',
+                          inconsolata: 'var(--font-inconsolata)',
+                          'system-mono': 'ui-monospace, monospace',
+                        };
 
                         return (
                           <button
@@ -214,15 +223,18 @@ export function SettingsModal() {
                             onClick={() =>
                               updatePreferences({ fontFamily: font.id })
                             }
-                            style={{ fontFamily: fontVarStyle }}
-                            className={`flex flex-col items-start gap-1 rounded-xl px-3.5 py-2.5 text-left transition-all ${
+                            style={{
+                              fontFamily:
+                                fontVarMap[font.id] ?? 'ui-monospace, monospace',
+                            }}
+                            className={`flex flex-col items-start gap-1 rounded-xl px-3 py-2 text-left transition-all ${
                               active
                                 ? 'bg-accent-soft text-text-primary ring-1 ring-accent/50'
                                 : 'bg-white/[0.035] text-text-secondary hover:bg-white/[0.07] hover:text-text-primary'
                             }`}
                           >
                             <span className="text-sm font-medium">Aa</span>
-                            <span className="text-[11px] opacity-85">
+                            <span className="truncate text-[11px] opacity-85">
                               {font.label}
                             </span>
                           </button>
