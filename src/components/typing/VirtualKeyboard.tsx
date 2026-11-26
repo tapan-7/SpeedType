@@ -41,8 +41,8 @@ export function VirtualKeyboard() {
   }>({
     left: 0,
     top: 0,
-    width: 44,
-    height: 44,
+    width: 64,
+    height: 56,
     visible: false,
     isError: false,
   });
@@ -85,7 +85,7 @@ export function VirtualKeyboard() {
     <div
       ref={containerRef}
       aria-hidden="true"
-      className="relative mx-auto hidden w-full max-w-2xl select-none flex-col items-center gap-2 sm:flex"
+      className="relative mx-auto hidden w-full max-w-4xl select-none flex-col items-center gap-2.5 sm:flex"
     >
       {/* Smoothly gliding key spotlight */}
       <div
@@ -101,7 +101,7 @@ export function VirtualKeyboard() {
       />
 
       {QWERTY_ROWS.map((row, rowIdx) => (
-        <div key={rowIdx} className="flex items-center justify-center gap-2">
+        <div key={rowIdx} className="flex items-center justify-center gap-2.5">
           {row.map((keyDef) => {
             let state = KeyState.IDLE;
             if (recentPress && recentPress.key === keyDef.value) {
@@ -110,7 +110,7 @@ export function VirtualKeyboard() {
               state = KeyState.EXPECTED;
             }
 
-            const widthClass = keyDef.width === 6 ? 'w-60' : 'w-11';
+            const widthClass = keyDef.width === 6 ? 'w-72 md:w-84' : 'w-13 md:w-16';
 
             return (
               <div
@@ -118,7 +118,7 @@ export function VirtualKeyboard() {
                 ref={(el) => {
                   keyRefs.current[keyDef.value] = el;
                 }}
-                className={`relative z-10 flex h-11 ${widthClass} items-center justify-center rounded-xl border font-mono text-sm font-medium transition-all duration-150 ease-out ${getKeyClass(
+                className={`relative z-10 flex h-12 md:h-14 ${widthClass} items-center justify-center rounded-2xl border font-mono text-base font-medium transition-all duration-150 ease-out ${getKeyClass(
                   state,
                 )}`}
               >
