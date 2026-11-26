@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { BarChart3, Keyboard, Settings } from 'lucide-react';
 import { TestStatus, UI_STRINGS } from '@/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
@@ -9,29 +7,29 @@ import { IconButton } from '@/components/common/IconButton';
 import { SpeedTypeLogo } from '@/components/common/SpeedTypeLogo';
 
 export function Header() {
-  const pathname = usePathname();
   const status = useTypingStore((s) => s.engineState.status);
   const preferences = useTypingStore((s) => s.preferences);
+  const isStatsOpen = useTypingStore((s) => s.isStatsOpen);
   const restart = useTypingStore((s) => s.restart);
   const updatePreferences = useTypingStore((s) => s.updatePreferences);
   const setSettingsOpen = useTypingStore((s) => s.setSettingsOpen);
+  const setStatsOpen = useTypingStore((s) => s.setStatsOpen);
 
   const isTyping =
-    pathname === '/' &&
-    status === TestStatus.RUNNING &&
-    preferences.focusFadeOut;
+    !isStatsOpen && status === TestStatus.RUNNING && preferences.focusFadeOut;
 
   return (
     <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
-      <Link
-        href="/"
+      <button
+        type="button"
         onClick={() => {
-          if (pathname === '/') restart();
+          setStatsOpen(false);
+          restart();
         }}
         className="group flex items-center text-left focus:outline-none"
       >
         <SpeedTypeLogo />
-      </Link>
+      </button>
 
       <nav
         aria-label="Secondary navigation"
@@ -39,18 +37,13 @@ export function Header() {
           isTyping ? 'pointer-events-none opacity-0' : 'opacity-100'
         }`}
       >
-        <Link
-          href="/stats"
-          aria-label="Analytics & history"
-          title="Stats & History"
-          className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
-            pathname === '/stats'
-              ? 'bg-accent-soft text-accent'
-              : 'text-text-muted hover:bg-bg-surface-hover hover:text-text-primary'
-          }`}
+        <IconButton
+          label="Stats & History"
+          active={isStatsOpen}
+          onClick={() => setStatsOpen(!isStatsOpen)}
         >
           <BarChart3 className="h-4 w-4" />
-        </Link>
+        </IconButton>
         <IconButton
           label={
             preferences.showVirtualKeyboard

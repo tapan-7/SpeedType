@@ -53,6 +53,7 @@ export function TypingViewport() {
   const isCustomModalOpen = useTypingStore((s) => s.isCustomModalOpen);
   const isSettingsOpen = useTypingStore((s) => s.isSettingsOpen);
   const isHistoryOpen = useTypingStore((s) => s.isHistoryOpen);
+  const isStatsOpen = useTypingStore((s) => s.isStatsOpen);
   const handleKey = useTypingStore((s) => s.handleKey);
   const tick = useTypingStore((s) => s.tick);
   const restart = useTypingStore((s) => s.restart);
@@ -72,7 +73,8 @@ export function TypingViewport() {
   }>({ left: 0, top: 6, height: 30, width: 2.5 });
   const tabPressedAtRef = useRef<number>(0);
 
-  const anyModalOpen = isCustomModalOpen || isSettingsOpen || isHistoryOpen;
+  const anyModalOpen =
+    isCustomModalOpen || isSettingsOpen || isHistoryOpen || isStatsOpen;
   const sizeMetrics =
     FONT_SIZE_METRICS[preferences.fontSize ?? 'comfortable'] ??
     FONT_SIZE_METRICS.comfortable;

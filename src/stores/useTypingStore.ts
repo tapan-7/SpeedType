@@ -65,6 +65,7 @@ interface TypingStore {
   isCustomModalOpen: boolean;
   isSettingsOpen: boolean;
   isHistoryOpen: boolean;
+  isStatsOpen: boolean;
   hydrated: boolean;
 
   hydrate: () => void;
@@ -77,6 +78,7 @@ interface TypingStore {
   setCustomModalOpen: (open: boolean) => void;
   setSettingsOpen: (open: boolean) => void;
   setHistoryOpen: (open: boolean) => void;
+  setStatsOpen: (open: boolean) => void;
 }
 
 const initialEngine = new TypingEngine({ config: DEFAULT_TEST_CONFIG });
@@ -91,6 +93,7 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
   isCustomModalOpen: false,
   isSettingsOpen: false,
   isHistoryOpen: false,
+  isStatsOpen: false,
   hydrated: false,
 
   hydrate: () => {
@@ -222,5 +225,6 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
   setCustomModalOpen: (open: boolean) => set({ isCustomModalOpen: open }),
   setSettingsOpen: (open: boolean) => set({ isSettingsOpen: open }),
   setHistoryOpen: (open: boolean) => set({ isHistoryOpen: open }),
+  setStatsOpen: (open: boolean) => set({ isStatsOpen: open }),
 }));
 
