@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/**
+ * Universal SpeedType Design Tokens
+ * All components reference these semantic tokens rather than hardcoded colors.
+ */
+:root {
+  --st-bg-primary: #0c0d10;
+  --st-bg-elevated: #14161c;
+  --st-bg-surface: rgba(255, 255, 255, 0.035);
+  --st-bg-surface-hover: rgba(255, 255, 255, 0.07);
+  --st-border-subtle: rgba(255, 255, 255, 0.08);
+  --st-border-strong: rgba(255, 255, 255, 0.16);
+
+  --st-text-primary: #f3f4f6;
+  --st-text-secondary: #9ca3af;
+  --st-text-muted: #555b66;
+
+  --st-accent-primary: #ff7a45;
+  --st-accent-primary-soft: rgba(255, 122, 69, 0.16);
+  --st-accent-secondary: #a78bfa;
+  --st-accent-secondary-soft: rgba(167, 139, 250, 0.14);
+
+  --st-char-pending: #5a606d;
+  --st-char-correct: #e5e7eb;
+  --st-char-error: #f87171;
+  --st-char-extra: #dc2626;
+  --st-caret: #ff7a45;
+
+  --st-key-bg: rgba(255, 255, 255, 0.04);
+  --st-key-border: rgba(255, 255, 255, 0.09);
+  --st-key-active: rgba(255, 122, 69, 0.24);
+}
+
+@theme inline {
+  --color-bg-primary: var(--st-bg-primary);
+  --color-bg-elevated: var(--st-bg-elevated);
+  --color-bg-surface: var(--st-bg-surface);
+  --color-bg-surface-hover: var(--st-bg-surface-hover);
+  --color-border-subtle: var(--st-border-subtle);
+  --color-border-strong: var(--st-border-strong);
+
+  --color-text-primary: var(--st-text-primary);
+  --color-text-secondary: var(--st-text-secondary);
+  --color-text-muted: var(--st-text-muted);
+
+  --color-accent: var(--st-accent-primary);
+  --color-accent-soft: var(--st-accent-primary-soft);
+  --color-lavender: var(--st-accent-secondary);
+  --color-lavender-soft: var(--st-accent-secondary-soft);
+
+  --color-char-pending: var(--st-char-pending);
+  --color-char-correct: var(--st-char-correct);
+  --color-char-error: var(--st-char-error);
+  --color-char-extra: var(--st-char-extra);
+  --color-caret: var(--st-caret);
+
+  --color-key-bg: var(--st-key-bg);
+  --color-key-border: var(--st-key-border);
+  --color-key-active: var(--st-key-active);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--st-bg-primary);
+  color: var(--st-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle ambient glow matching SpeedType dark developer aesthetic */
+.st-ambient-bg {
+  background-image:
+    radial-gradient(
+      60% 45% at 15% 10%,
+      rgba(255, 122, 69, 0.06),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 45% at 85% 90%,
+      rgba(167, 139, 250, 0.05),
+      transparent 70%
+    );
+}
+
+@keyframes st-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.animate-caret-blink {
+  animation: st-caret-blink 1.05s ease-in-out infinite;
+}

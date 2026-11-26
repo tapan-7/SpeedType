@@ -1,0 +1,19 @@
+{
+  "name": "speedtype",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@speedtype/web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm test --workspace=@speedtype/typing-engine",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspace=@speedtype/web"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
