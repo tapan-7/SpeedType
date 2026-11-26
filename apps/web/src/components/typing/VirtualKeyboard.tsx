@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { KeyState, QWERTY_ROWS } from '@speedtype/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 
 function getKeyClass(state: KeyState): string {
   switch (state) {
     case KeyState.ACTIVE:
-      return 'border-accent/60 bg-key-active text-text-primary scale-95';
+      return 'border-accent/70 bg-key-active text-text-primary scale-[0.94] shadow-[0_0_16px_rgba(255,122,69,0.28)]';
     case KeyState.ERROR:
-      return 'border-char-error/60 bg-char-error/20 text-char-error scale-95';
+      return 'border-char-error/70 bg-char-error/20 text-char-error scale-[0.94] shadow-[0_0_16px_rgba(248,113,113,0.3)]';
     case KeyState.EXPECTED:
-      return 'border-accent/45 bg-bg-surface-hover text-accent';
+      return 'border-accent/55 bg-accent/10 text-accent shadow-[0_0_14px_rgba(255,122,69,0.16)]';
     case KeyState.IDLE:
     default:
       return 'border-key-border bg-key-bg text-text-muted';
@@ -29,24 +29,79 @@ export function VirtualKeyboard() {
     isError: boolean;
   } | null>(null);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const keyRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [glowRect, setGlowRect] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    visible: boolean;
+    isError: boolean;
+  }>({
+    left: 0,
+    top: 0,
+    width: 44,
+    height: 44,
+    visible: false,
+    isError: false,
+  });
+
   useEffect(() => {
     if (!activeKeyPress) return;
     setRecentPress({ key: activeKeyPress.key, isError: activeKeyPress.isError });
-    const timer = window.setTimeout(() => setRecentPress(null), 130);
+    const timer = window.setTimeout(() => setRecentPress(null), 150);
     return () => window.clearTimeout(timer);
   }, [activeKeyPress]);
 
-  if (!showVirtualKeyboard) return null;
-
   const normalizedExpected = expectedKey?.toLowerCase() ?? null;
+  const targetKeyValue = recentPress?.key ?? normalizedExpected;
+
+  useLayoutEffect(() => {
+    if (!showVirtualKeyboard || !targetKeyValue) {
+      setGlowRect((prev) => (prev.visible ? { ...prev, visible: false } : prev));
+      return;
+    }
+
+    const keyEl = keyRefs.current[targetKeyValue];
+    if (!keyEl) {
+      setGlowRect((prev) => (prev.visible ? { ...prev, visible: false } : prev));
+      return;
+    }
+
+    setGlowRect({
+      left: keyEl.offsetLeft,
+      top: keyEl.offsetTop,
+      width: keyEl.offsetWidth,
+      height: keyEl.offsetHeight,
+      visible: true,
+      isError: Boolean(recentPress?.isError),
+    });
+  }, [showVirtualKeyboard, targetKeyValue, recentPress]);
+
+  if (!showVirtualKeyboard) return null;
 
   return (
     <div
+      ref={containerRef}
       aria-hidden="true"
-      className="mx-auto hidden w-full max-w-xl select-none flex-col items-center gap-1.5 sm:flex"
+      className="relative mx-auto hidden w-full max-w-2xl select-none flex-col items-center gap-2 sm:flex"
     >
+      {/* Smoothly gliding key spotlight */}
+      <div
+        style={{
+          transform: `translate3d(${glowRect.left - 4}px, ${glowRect.top - 4}px, 0)`,
+          width: `${glowRect.width + 8}px`,
+          height: `${glowRect.height + 8}px`,
+          opacity: glowRect.visible ? 1 : 0,
+        }}
+        className={`pointer-events-none absolute left-0 top-0 z-0 rounded-2xl blur-md transition-[transform,width,height,opacity,background-color] duration-200 ease-out ${
+          glowRect.isError ? 'bg-char-error/25' : 'bg-accent/25'
+        }`}
+      />
+
       {QWERTY_ROWS.map((row, rowIdx) => (
-        <div key={rowIdx} className="flex items-center justify-center gap-1.5">
+        <div key={rowIdx} className="flex items-center justify-center gap-2">
           {row.map((keyDef) => {
             let state = KeyState.IDLE;
             if (recentPress && recentPress.key === keyDef.value) {
@@ -55,12 +110,15 @@ export function VirtualKeyboard() {
               state = KeyState.EXPECTED;
             }
 
-            const widthClass = keyDef.width === 6 ? 'w-48' : 'w-9';
+            const widthClass = keyDef.width === 6 ? 'w-60' : 'w-11';
 
             return (
               <div
                 key={keyDef.id}
-                className={`flex h-9 ${widthClass} items-center justify-center rounded-lg border font-mono text-xs font-medium transition-all duration-100 ${getKeyClass(
+                ref={(el) => {
+                  keyRefs.current[keyDef.value] = el;
+                }}
+                className={`relative z-10 flex h-11 ${widthClass} items-center justify-center rounded-xl border font-mono text-sm font-medium transition-all duration-150 ease-out ${getKeyClass(
                   state,
                 )}`}
               >

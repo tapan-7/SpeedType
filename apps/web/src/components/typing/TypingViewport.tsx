@@ -12,7 +12,9 @@ import {
 import type { WordEntry } from '@speedtype/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 
-const LINE_HEIGHT_PX = 44;
+const LINE_HEIGHT_PX = 52;
+const CARET_HEIGHT_PX = 36;
+const CARET_TOP_OFFSET_PX = 8;
 
 function getCharColorClass(status: CharacterStatus): string {
   switch (status) {
@@ -131,17 +133,17 @@ export function TypingViewport() {
     if (charEl) {
       setCaretPos({
         left: charEl.offsetLeft,
-        top: charEl.offsetTop + 6,
-        height: 30,
-        width: Math.max(12, charEl.offsetWidth),
+        top: charEl.offsetTop + CARET_TOP_OFFSET_PX,
+        height: CARET_HEIGHT_PX,
+        width: Math.max(14, charEl.offsetWidth),
       });
     } else {
       // Caret sits at the right edge of the active word (after last typed/extra char)
       setCaretPos({
         left: activeWordEl.offsetLeft + activeWordEl.offsetWidth,
-        top: activeWordEl.offsetTop + 6,
-        height: 30,
-        width: 12,
+        top: activeWordEl.offsetTop + CARET_TOP_OFFSET_PX,
+        height: CARET_HEIGHT_PX,
+        width: 14,
       });
     }
   }, [
@@ -244,7 +246,7 @@ export function TypingViewport() {
           <div
             ref={wordsContainerRef}
             style={{ transform: `translate3d(0, -${scrollOffset}px, 0)` }}
-            className="relative flex flex-wrap content-start gap-x-3.5 font-mono text-2xl leading-[44px] tracking-normal transition-transform duration-150 ease-out sm:text-[26px]"
+            className="relative flex flex-wrap content-start gap-x-4 font-mono text-[28px] leading-[52px] tracking-normal transition-transform duration-150 ease-out sm:text-[32px]"
           >
             {renderCaret()}
 
