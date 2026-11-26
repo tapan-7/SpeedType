@@ -15,6 +15,7 @@ import type {
   UserPreferences,
 } from '@/shared';
 import { TypingEngine } from '@/typing-engine';
+import { playKeystrokeSound } from '@/lib/soundEngine';
 
 function loadFromStorage<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback;
@@ -139,6 +140,8 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
 
     const nextErrors = nextState.totalKeystrokes - nextState.correctKeystrokes;
     const wasError = nextErrors > prevErrors;
+    const { soundProfile, soundVolume } = get().preferences;
+    playKeystrokeSound(soundProfile, soundVolume, wasError);
 
     let lastResult = prevResult;
     let nextHistory = history;

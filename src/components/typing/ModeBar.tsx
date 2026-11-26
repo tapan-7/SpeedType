@@ -2,6 +2,7 @@
 
 import { AtSign, Hash, Pencil } from 'lucide-react';
 import {
+  CODE_LANGUAGE_OPTIONS,
   MODE_OPTIONS,
   QUOTE_LENGTH_OPTIONS,
   TIME_PRESETS,
@@ -101,6 +102,17 @@ export function ModeBar() {
               key={opt.value}
               active={config.quoteLength === opt.value}
               onClick={() => updateConfig({ quoteLength: opt.value })}
+            >
+              {opt.label}
+            </PillToggle>
+          ))}
+
+        {config.mode === TestMode.CODE &&
+          CODE_LANGUAGE_OPTIONS.map((opt) => (
+            <PillToggle
+              key={opt.value}
+              active={config.codeLanguage === opt.value}
+              onClick={() => updateConfig({ codeLanguage: opt.value })}
             >
               {opt.label}
             </PillToggle>

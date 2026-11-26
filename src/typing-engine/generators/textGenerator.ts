@@ -1,10 +1,12 @@
 import {
   CharacterStatus,
+  CodeLanguage,
   DEFAULT_CUSTOM_TEXT,
   QuoteLength,
   TestMode,
 } from '@/shared';
 import type { TestConfig, WordEntry } from '@/shared';
+import { CODE_SNIPPETS } from '../data/codeSnippets.js';
 import { ENGLISH_QUOTES } from '../data/quotes.js';
 import { ENGLISH_WORDS } from '../data/words.js';
 
@@ -108,6 +110,19 @@ export function generateTestWords(config: TestConfig): GeneratedTestPayload {
       return {
         words: rawWords.map(toWordEntry),
         quoteAuthor: quote.author,
+      };
+    }
+
+    case TestMode.CODE: {
+      const pool =
+        config.codeLanguage === CodeLanguage.ALL
+          ? CODE_SNIPPETS
+          : CODE_SNIPPETS.filter((s) => s.language === config.codeLanguage);
+      const snippet = pickRandom(pool.length > 0 ? pool : CODE_SNIPPETS);
+      const rawWords = snippet.text.trim().split(/\s+/);
+      return {
+        words: rawWords.map(toWordEntry),
+        quoteAuthor: snippet.label,
       };
     }
 

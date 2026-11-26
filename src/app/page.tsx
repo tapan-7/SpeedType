@@ -13,6 +13,7 @@ import { CustomTextModal } from '@/components/typing/CustomTextModal';
 import { ResultsView } from '@/components/results/ResultsView';
 import { PreferencesModal } from '@/components/settings/PreferencesModal';
 import { HistoryModal } from '@/components/settings/HistoryModal';
+import { ThemeSync } from '@/components/layout/ThemeSync';
 
 export default function HomePage() {
   const hydrate = useTypingStore((s) => s.hydrate);
@@ -53,6 +54,7 @@ export default function HomePage() {
       <CustomTextModal />
       <PreferencesModal />
       <HistoryModal />
+      <ThemeSync />
     </div>
   );
 }

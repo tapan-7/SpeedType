@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, JetBrains_Mono } from 'next/font/google';
+import { Fira_Code, Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 
 const geistSans = Geist({
@@ -9,6 +9,16 @@ const geistSans = Geist({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
+  subsets: ['latin'],
+});
+
+const firaCode = Fira_Code({
+  variable: '--font-fira-code',
+  subsets: ['latin'],
+});
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
@@ -26,7 +36,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${jetbrainsMono.variable} dark`}
+      data-theme="obsidian-coral"
+      data-font="jetbrains-mono"
+      className={`${geistSans.variable} ${jetbrainsMono.variable} ${firaCode.variable} ${geistMono.variable} dark`}
     >
       <body className="st-ambient-bg min-h-screen bg-bg-primary text-text-primary selection:bg-accent-soft selection:text-text-primary">
         {children}

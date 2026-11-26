@@ -441,6 +441,8 @@ export class TypingEngine {
         return `words ${this.config.wordCount}`;
       case TestMode.QUOTE:
         return `quote (${this.config.quoteLength})`;
+      case TestMode.CODE:
+        return `code (${this.config.codeLanguage})`;
       case TestMode.CUSTOM:
         return 'custom';
     }

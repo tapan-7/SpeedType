@@ -301,12 +301,14 @@ export function TypingViewport() {
         )}
       </div>
 
-      {/* Quote author attribution */}
-      {engineState.config.mode === TestMode.QUOTE && engineState.quoteAuthor && (
-        <p className="text-xs font-medium tracking-wide text-text-muted">
-          — {engineState.quoteAuthor}
-        </p>
-      )}
+      {/* Quote or Code Snippet attribution */}
+      {(engineState.config.mode === TestMode.QUOTE ||
+        engineState.config.mode === TestMode.CODE) &&
+        engineState.quoteAuthor && (
+          <p className="text-xs font-medium tracking-wide text-text-muted">
+            — {engineState.quoteAuthor}
+          </p>
+        )}
 
       {/* Subtle restart button */}
       <button

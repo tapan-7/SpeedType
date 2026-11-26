@@ -1,9 +1,13 @@
 import {
   CaretStyle,
   CharacterStatus,
+  CodeLanguage,
+  FontFamily,
   QuoteLength,
+  SoundProfile,
   TestMode,
   TestStatus,
+  ThemeId,
 } from '../enums/index.js';
 
 /**
@@ -17,6 +21,8 @@ export interface TestConfig {
   wordCount: number;
   /** Quote length filter when mode === TestMode.QUOTE */
   quoteLength: QuoteLength;
+  /** Language filter when mode === TestMode.CODE */
+  codeLanguage: CodeLanguage;
   /** Include punctuation in generated word sequences */
   punctuation: boolean;
   /** Include numbers in generated word sequences */
@@ -124,6 +130,10 @@ export interface UserPreferences {
   smoothCaret: boolean;
   caretStyle: CaretStyle;
   focusFadeOut: boolean;
+  theme: ThemeId;
+  fontFamily: FontFamily;
+  soundProfile: SoundProfile;
+  soundVolume: number;
 }
 
 /**

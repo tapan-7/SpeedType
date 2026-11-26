@@ -4,7 +4,8 @@
  * Universal SpeedType Design Tokens
  * All components reference these semantic tokens rather than hardcoded colors.
  */
-:root {
+:root,
+:root[data-theme='obsidian-coral'] {
   --st-bg-primary: #0c0d10;
   --st-bg-elevated: #14161c;
   --st-bg-surface: rgba(255, 255, 255, 0.035);
@@ -30,6 +31,108 @@
   --st-key-bg: rgba(255, 255, 255, 0.04);
   --st-key-border: rgba(255, 255, 255, 0.09);
   --st-key-active: rgba(255, 122, 69, 0.24);
+
+  --st-font-typing: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-theme='midnight-lavender'] {
+  --st-bg-primary: #0b0e17;
+  --st-bg-elevated: #131826;
+  --st-bg-surface: rgba(167, 139, 250, 0.05);
+  --st-bg-surface-hover: rgba(167, 139, 250, 0.1);
+  --st-border-subtle: rgba(167, 139, 250, 0.12);
+  --st-border-strong: rgba(167, 139, 250, 0.24);
+
+  --st-text-primary: #eef2ff;
+  --st-text-secondary: #a5b4fc;
+  --st-text-muted: #5b6384;
+
+  --st-accent-primary: #a78bfa;
+  --st-accent-primary-soft: rgba(167, 139, 250, 0.18);
+  --st-accent-secondary: #38bdf8;
+  --st-accent-secondary-soft: rgba(56, 189, 248, 0.14);
+
+  --st-char-pending: #5e6787;
+  --st-char-correct: #e0e7ff;
+  --st-char-error: #fb7185;
+  --st-char-extra: #e11d48;
+  --st-caret: #a78bfa;
+
+  --st-key-bg: rgba(167, 139, 250, 0.05);
+  --st-key-border: rgba(167, 139, 250, 0.12);
+  --st-key-active: rgba(167, 139, 250, 0.25);
+}
+
+:root[data-theme='monochrome'] {
+  --st-bg-primary: #09090b;
+  --st-bg-elevated: #18181b;
+  --st-bg-surface: rgba(255, 255, 255, 0.04);
+  --st-bg-surface-hover: rgba(255, 255, 255, 0.08);
+  --st-border-subtle: rgba(255, 255, 255, 0.09);
+  --st-border-strong: rgba(255, 255, 255, 0.18);
+
+  --st-text-primary: #fafafa;
+  --st-text-secondary: #a1a1aa;
+  --st-text-muted: #52525b;
+
+  --st-accent-primary: #e4e4e7;
+  --st-accent-primary-soft: rgba(228, 228, 231, 0.14);
+  --st-accent-secondary: #a1a1aa;
+  --st-accent-secondary-soft: rgba(161, 161, 170, 0.14);
+
+  --st-char-pending: #52525b;
+  --st-char-correct: #f4f4f5;
+  --st-char-error: #f87171;
+  --st-char-extra: #dc2626;
+  --st-caret: #fafafa;
+
+  --st-key-bg: rgba(255, 255, 255, 0.04);
+  --st-key-border: rgba(255, 255, 255, 0.1);
+  --st-key-active: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme='paper'] {
+  --st-bg-primary: #f6f5f1;
+  --st-bg-elevated: #ffffff;
+  --st-bg-surface: rgba(24, 24, 27, 0.04);
+  --st-bg-surface-hover: rgba(24, 24, 27, 0.08);
+  --st-border-subtle: rgba(24, 24, 27, 0.1);
+  --st-border-strong: rgba(24, 24, 27, 0.2);
+
+  --st-text-primary: #18181b;
+  --st-text-secondary: #52525b;
+  --st-text-muted: #a1a1aa;
+
+  --st-accent-primary: #ea580c;
+  --st-accent-primary-soft: rgba(234, 88, 12, 0.12);
+  --st-accent-secondary: #7c3aed;
+  --st-accent-secondary-soft: rgba(124, 58, 237, 0.1);
+
+  --st-char-pending: #a1a1aa;
+  --st-char-correct: #18181b;
+  --st-char-error: #dc2626;
+  --st-char-extra: #b91c1c;
+  --st-caret: #ea580c;
+
+  --st-key-bg: rgba(24, 24, 27, 0.04);
+  --st-key-border: rgba(24, 24, 27, 0.12);
+  --st-key-active: rgba(234, 88, 12, 0.18);
+}
+
+:root[data-font='jetbrains-mono'] {
+  --st-font-typing: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='fira-code'] {
+  --st-font-typing: var(--font-fira-code), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='geist-mono'] {
+  --st-font-typing: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+:root[data-font='system-mono'] {
+  --st-font-typing: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @theme inline {
@@ -60,8 +163,7 @@
   --color-key-active: var(--st-key-active);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono:
-    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-mono: var(--st-font-typing);
 }
 
 * {

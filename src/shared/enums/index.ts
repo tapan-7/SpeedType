@@ -14,7 +14,48 @@ export enum TestMode {
   TIME = 'time',
   WORDS = 'words',
   QUOTE = 'quote',
+  CODE = 'code',
   CUSTOM = 'custom',
+}
+
+/**
+ * Programming language filter for Code Snippets mode.
+ */
+export enum CodeLanguage {
+  ALL = 'all',
+  TYPESCRIPT = 'typescript',
+  JAVASCRIPT = 'javascript',
+  PYTHON = 'python',
+}
+
+/**
+ * Curated color theme presets.
+ */
+export enum ThemeId {
+  OBSIDIAN_CORAL = 'obsidian-coral',
+  MIDNIGHT_LAVENDER = 'midnight-lavender',
+  MONOCHROME = 'monochrome',
+  PAPER = 'paper',
+}
+
+/**
+ * Monospace font options for the typing prompt.
+ */
+export enum FontFamily {
+  JETBRAINS_MONO = 'jetbrains-mono',
+  FIRA_CODE = 'fira-code',
+  GEIST_MONO = 'geist-mono',
+  SYSTEM_MONO = 'system-mono',
+}
+
+/**
+ * Synthesized keystroke sound profiles.
+ */
+export enum SoundProfile {
+  OFF = 'off',
+  MECHANICAL = 'mechanical',
+  SOFT = 'soft',
+  TYPEWRITER = 'typewriter',
 }
 
 /**

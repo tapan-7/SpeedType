@@ -1,4 +1,12 @@
-import { CaretStyle, QuoteLength, TestMode } from '../enums/index.js';
+import {
+  CaretStyle,
+  CodeLanguage,
+  FontFamily,
+  QuoteLength,
+  SoundProfile,
+  TestMode,
+  ThemeId,
+} from '../enums/index.js';
 import type { TestConfig, UserPreferences, VirtualKeyDef } from '../types/index.js';
 
 export const APP_NAME = 'SpeedType';
@@ -14,11 +22,46 @@ export const QUOTE_LENGTH_OPTIONS: readonly { value: QuoteLength; label: string 
   { value: QuoteLength.LONG, label: 'long' },
 ];
 
+export const CODE_LANGUAGE_OPTIONS: readonly { value: CodeLanguage; label: string }[] = [
+  { value: CodeLanguage.ALL, label: 'all' },
+  { value: CodeLanguage.TYPESCRIPT, label: 'ts' },
+  { value: CodeLanguage.JAVASCRIPT, label: 'js' },
+  { value: CodeLanguage.PYTHON, label: 'py' },
+];
+
 export const MODE_OPTIONS: readonly { value: TestMode; label: string }[] = [
   { value: TestMode.TIME, label: 'time' },
   { value: TestMode.WORDS, label: 'words' },
   { value: TestMode.QUOTE, label: 'quote' },
+  { value: TestMode.CODE, label: 'code' },
   { value: TestMode.CUSTOM, label: 'custom' },
+];
+
+export const THEME_OPTIONS: readonly {
+  id: ThemeId;
+  label: string;
+  bg: string;
+  accent: string;
+  isLight?: boolean;
+}[] = [
+  { id: ThemeId.OBSIDIAN_CORAL, label: 'Obsidian Coral', bg: '#0c0d10', accent: '#ff7a45' },
+  { id: ThemeId.MIDNIGHT_LAVENDER, label: 'Midnight Lavender', bg: '#0b0e17', accent: '#a78bfa' },
+  { id: ThemeId.MONOCHROME, label: 'Monochrome', bg: '#09090b', accent: '#e4e4e7' },
+  { id: ThemeId.PAPER, label: 'Paper', bg: '#f6f5f1', accent: '#ea580c', isLight: true },
+];
+
+export const FONT_OPTIONS: readonly { id: FontFamily; label: string }[] = [
+  { id: FontFamily.JETBRAINS_MONO, label: 'JetBrains Mono' },
+  { id: FontFamily.FIRA_CODE, label: 'Fira Code' },
+  { id: FontFamily.GEIST_MONO, label: 'Geist Mono' },
+  { id: FontFamily.SYSTEM_MONO, label: 'System Mono' },
+];
+
+export const SOUND_PROFILE_OPTIONS: readonly { id: SoundProfile; label: string }[] = [
+  { id: SoundProfile.OFF, label: 'off' },
+  { id: SoundProfile.MECHANICAL, label: 'mechanical' },
+  { id: SoundProfile.SOFT, label: 'soft' },
+  { id: SoundProfile.TYPEWRITER, label: 'typewriter' },
 ];
 
 export const DEFAULT_CUSTOM_TEXT =
@@ -29,6 +72,7 @@ export const DEFAULT_TEST_CONFIG: TestConfig = {
   durationSeconds: 30,
   wordCount: 25,
   quoteLength: QuoteLength.ALL,
+  codeLanguage: CodeLanguage.ALL,
   punctuation: false,
   numbers: false,
   customText: DEFAULT_CUSTOM_TEXT,
@@ -40,6 +84,10 @@ export const DEFAULT_USER_PREFERENCES: UserPreferences = {
   smoothCaret: true,
   caretStyle: CaretStyle.LINE,
   focusFadeOut: true,
+  theme: ThemeId.OBSIDIAN_CORAL,
+  fontFamily: FontFamily.JETBRAINS_MONO,
+  soundProfile: SoundProfile.OFF,
+  soundVolume: 0.5,
 };
 
 export const STORAGE_KEYS = {

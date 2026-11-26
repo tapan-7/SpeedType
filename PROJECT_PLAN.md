@@ -19,7 +19,7 @@
 | Element | Direction |
 | :--- | :--- |
 | **Background** | Deep obsidian / charcoal (`#0c0d10` / `#111318`) with subtle ambient glow |
-| **Surface / Pills** | Minimal frosted/dark cards (`rgba(255,255,255,0.04)`) with subtle borders |
+| **Surface / Pills** | Open, borderless frosted glass surfaces (`rgba(255,255,255,0.03)`) with ambient glow and gradient hairlines (no boxy bordered cards) |
 | **Primary Accent** | Coral orange / warm amber |
 | **Secondary Accent** | Soft lavender |
 | **Text States** | Pending: muted gray · Correct: bright off-white · Incorrect: soft red + word underline |
@@ -27,20 +27,21 @@
 
 ---
 
-## 2. Architecture & Monorepo Structure
+## 2. Architecture & Project Structure
 
-We use a **`pnpm` workspace monorepo** so the core typing engine is completely decoupled from React and NestJS, making it easy to unit test and reuse across modes.
+Currently structured as a **single Next.js App Router application** for simplicity and fast iteration, with core typing logic and shared types cleanly isolated under `src/typing-engine/` and `src/shared/` so they can be extracted into shared workspace packages if additional apps (e.g., API, mobile, desktop) are added in Phase 3+.
 
 ```text
-speedtype/
-├── apps/
-│   ├── web/                  # Next.js (App Router) + TypeScript + Tailwind + Zustand
-│   └── api/                  # (Phase 3) NestJS REST API
-├── packages/
+SpeedType/
+├── src/
+│   ├── app/                  # Next.js App Router pages, layout, global styles
+│   ├── components/           # UI components (typing, results, settings, layout, common)
+│   ├── stores/               # Zustand state store (useTypingStore)
 │   ├── typing-engine/        # Framework-agnostic TS typing engine + Vitest suite
-│   ├── shared/               # Shared types, constants, schemas (Zod)
-│   └── database/             # (Phase 3) Prisma schema & PostgreSQL client
-├── pnpm-workspace.yaml
+│   └── shared/               # Shared types, enums, constants
+├── next.config.ts
+├── vitest.config.ts
+├── package.json
 └── PROJECT_PLAN.md
 ```
 
@@ -53,47 +54,48 @@ speedtype/
 
 ## 3. Phased Development Roadmap
 
-### Phase 1 — Foundation, Independent Typing Engine & Clean Practice UI
+### Phase 1 — Foundation, Independent Typing Engine & Clean Practice UI ✅
 **Goal:** A complete, smooth, zero-login typing experience running locally in the browser.
 
-1. **Monorepo & App Scaffolding:**
-   - Initialize `pnpm` workspace (`apps/web`, `packages/typing-engine`, `packages/shared`).
-   - Configure Next.js, TypeScript, Tailwind CSS, `Geist Sans` + `JetBrains Mono`, and Vitest.
-2. **Independent `typing-engine` (`packages/typing-engine`):**
-   - Finite State Machine: `idle` → `running` → `completed`.
-   - Word/text generators (English common 200 / 1k word lists, punctuation & numbers modifiers, quotes, custom text).
-   - Character-by-character & word-level validation (`correct`, `incorrect`, `pending`, extra/missed chars) + Backspace handling.
-   - `performance.now()` timer + per-second snapshots for WPM, Raw WPM, Accuracy, Consistency, and per-key mistake tracking.
-   - Unit tests covering normal typing, fast typing, consecutive errors, backspace, punctuation/numbers, timer expiry, and restart.
-3. **Clean Practice Screen (`apps/web`):**
-   - **Minimal Top Header:** `SpeedType` logo + compact secondary nav icons (`Stats`, `Settings`).
-   - **Centered Mode Pill Bar:**
+1. **App Scaffolding:**
+   - [x] Single Next.js App Router project (`npm`), TypeScript, Tailwind CSS v4, `Geist Sans` + `JetBrains Mono`, and Vitest.
+2. **Independent `typing-engine` (`src/typing-engine`):**
+   - [x] Finite State Machine: `idle` → `running` → `completed`.
+   - [x] Word/text generators (English common word lists, punctuation & numbers modifiers, quotes, custom text).
+   - [x] Character-by-character & word-level validation (`correct`, `incorrect`, `pending`, extra/missed chars) + Backspace handling.
+   - [x] `performance.now()` timer + per-second snapshots for WPM, Raw WPM, Accuracy, Consistency, and per-key mistake tracking.
+   - [x] Unit tests (`TypingEngine.test.ts`, 7/7 passing) covering normal typing, errors, backspace, completion, timer expiry, weak keys, and reset.
+3. **Clean Practice Screen (`src/components/typing`):**
+   - [x] **Minimal Top Header:** `SpeedType` logo + secondary nav icons (Virtual Keyboard toggle, History, Preferences).
+   - [x] **Borderless Glass Mode Pill Bar:**
      - Modifiers: `punctuation`, `numbers`
      - Modes: `time` (`15`, `30`, `60`, `120`), `words` (`10`, `25`, `50`, `100`), `quote` (`short`, `medium`, `long`), `custom`
-   - **Typing Stage:**
+   - [x] **Wide Typing Stage:**
      - Live `WPM`, `Accuracy`, `Time / Words` counter.
-     - 3-line auto-scrolling monospace text area with smooth gliding caret.
+     - Wide (`max-w-6xl` inside `max-w-7xl`), large (`30px–40px`) 3-line auto-scrolling monospace text area with smooth gliding caret.
      - Focus fade-out on header/mode bar/footer while actively typing.
-     - Instant restart (`Tab + Enter` or `↻` button).
-   - **Interactive On-Screen Keyboard:** Clean, low-contrast QWERTY visual keyboard below the prompt (with a quick toggle) showing next-key highlight and live keypress feedback.
-4. **Results Screen & Local History:**
-   - Large WPM & Accuracy summary, Raw WPM, Consistency, character breakdown (`correct / incorrect / extra / missed`).
-   - WPM-over-time + error-marker chart (Recharts).
-   - Weakest keys callout from the completed test.
-   - Automatic persistence of recent results and preferences in `localStorage`.
+     - Instant restart (`Tab + Enter` or `restart` button).
+   - [x] **Interactive On-Screen Keyboard:** Enlarged QWERTY visual keyboard with a smoothly gliding spotlight glow tracking the next/pressed key and error highlights.
+4. **Results Screen & Local History (`src/components/results`):**
+   - [x] Open, borderless glass results layout with `"Time's Up"` / `"Test Complete"` status header and `Tab` / `Enter` restart hint.
+   - [x] `ModeBar` kept accessible above results for 1-click mode switching.
+   - [x] Large WPM & Accuracy summary, Raw WPM, Consistency, character breakdown (`correct / incorrect / extra / missed`).
+   - [x] WPM-over-time area chart (Recharts) on a frosted glass surface + weakest keys callout.
+   - [x] Automatic persistence of recent results and preferences in `localStorage`.
 
 ---
 
-### Phase 2 — Personalization, Code Mode & Local Analytics
+### Phase 2 — Personalization, Code Mode & Local Analytics ✅
 **Goal:** Make the platform feel deeply customizable and rewarding without needing an account.
 
-- **Sound Effects:** Optional Web Audio API / mechanical switch sound profiles with volume control.
-- **Themes & Appearance:** Curated dark/light themes (e.g., Obsidian Coral, Midnight Lavender, Monochrome, Paper), font switcher, caret style (`line`, `block`, `underline`), and smooth-caret toggle.
-- **Code Snippets Mode:** Practice typing real TypeScript/JavaScript/Python snippets.
-- **Local Stats & Weakness Detector (`/stats`):**
-  - 7 / 30 / 90-day WPM and accuracy trend charts from local history.
-  - Personal bests by mode (`15s`, `30s`, `60s`, `25w`, `50w`, etc.).
-  - **Key Accuracy Heatmap / Weakness Detector:** Identify consistently mistyped keys and offer a 1-click "Practice Weak Keys" custom drill.
+- [x] **Caret Customization:** Caret style (`line`, `block`, `underline`) and smooth-caret toggle (available in Preferences modal).
+- [x] **Sound Effects:** Optional Web Audio API synthesized keystroke sound profiles (`off`, `mechanical`, `soft`, `typewriter`) with volume control and distinct error tone.
+- [x] **Themes & Font Switcher:** Curated dark/light themes (`Obsidian Coral`, `Midnight Lavender`, `Monochrome`, `Paper`) and typing font switcher (`JetBrains Mono`, `Fira Code`, `Geist Mono`, `System Mono`).
+- [x] **Code Snippets Mode:** Practice typing TypeScript, JavaScript, and Python snippets (`code` mode with `all / ts / js / py` filter).
+- [x] **Local Stats & Weakness Detector (`/stats`):**
+  - [x] 7 / 30 / 90-day WPM and accuracy trend charts from local history.
+  - [x] Personal bests by mode (`time 30s`, `words 25`, `code (typescript)`, etc.).
+  - [x] **Key Accuracy Heatmap / Weakness Detector:** QWERTY heatmap highlighting mistyped keys across sessions with a 1-click **"Practice Weak Keys"** custom drill.
 
 ---
 
@@ -123,6 +125,6 @@ speedtype/
 ---
 
 ## 4. Verification Strategy
-- **Unit Tests (`Vitest`):** `packages/typing-engine` state transitions, WPM/consistency math, and edge cases.
-- **E2E Tests (`Playwright`):** Landing directly on typing area, completing a test without login, mode switching, restart shortcuts, results rendering, and responsive layout checks.
+- **Unit Tests (`Vitest`):** `src/typing-engine/__tests__/TypingEngine.test.ts` — state transitions, WPM/consistency math, and edge cases.
+- **E2E Tests (`Playwright`):** Planned for landing directly on typing area, completing a test without login, mode switching, restart shortcuts, results rendering, and responsive layout checks.
 

@@ -31,9 +31,9 @@ export function CustomTextModal() {
       role="dialog"
       aria-modal="true"
       aria-label="Custom typing text"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-md"
     >
-      <div className="w-full max-w-lg rounded-2xl border border-border-strong bg-bg-elevated p-6 shadow-2xl">
+      <div className="w-full max-w-lg rounded-3xl bg-bg-elevated/85 p-6 shadow-2xl backdrop-blur-2xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-base font-semibold text-text-primary">
             Custom Practice Text
@@ -41,7 +41,7 @@ export function CustomTextModal() {
           <button
             type="button"
             onClick={() => setCustomModalOpen(false)}
-            className="rounded-lg p-1 text-text-muted hover:bg-bg-surface-hover hover:text-text-primary"
+            className="rounded-full p-1.5 text-text-muted transition-colors hover:bg-bg-surface-hover hover:text-text-primary"
           >
             <X className="h-4 w-4" />
           </button>
@@ -52,7 +52,7 @@ export function CustomTextModal() {
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Paste or write your custom English passage here..."
-          className="w-full rounded-xl border border-border-subtle bg-bg-primary p-3 font-mono text-sm text-text-primary placeholder:text-text-muted focus:border-accent/60 focus:outline-none"
+          className="w-full rounded-2xl bg-white/[0.04] p-3.5 font-mono text-sm text-text-primary placeholder:text-text-muted focus:ring-1 focus:ring-accent/50 focus:outline-none"
         />
 
         <div className="mt-4 flex justify-end gap-2">

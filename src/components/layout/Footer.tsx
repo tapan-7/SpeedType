@@ -30,7 +30,7 @@ export function Footer() {
         <span>·</span>
         <span>No login required</span>
         <span>·</span>
-        <span>Local stats saved automatically</span>
+        <span>Stats saved automatically</span>
       </div>
     </footer>
   );
