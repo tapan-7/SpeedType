@@ -124,6 +124,8 @@ export interface TypingEngineState {
 /**
  * Local user preferences persisted in browser storage.
  */
+export type TypingFontSize = 'compact' | 'comfortable' | 'large';
+
 export interface UserPreferences {
   showVirtualKeyboard: boolean;
   showLiveStats: boolean;
@@ -132,8 +134,10 @@ export interface UserPreferences {
   focusFadeOut: boolean;
   theme: ThemeId;
   fontFamily: FontFamily;
+  fontSize: TypingFontSize;
   soundProfile: SoundProfile;
   soundVolume: number;
+  playErrorSound: boolean;
 }
 
 /**

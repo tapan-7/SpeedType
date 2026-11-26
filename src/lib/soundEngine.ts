@@ -26,6 +26,7 @@ export function playKeystrokeSound(
   profile: SoundProfile,
   volume: number,
   isError: boolean,
+  playErrorTone = true,
 ): void {
   if (profile === SoundProfile.OFF || volume <= 0) return;
 
@@ -35,7 +36,7 @@ export function playKeystrokeSound(
   const now = ctx.currentTime;
   const gainLevel = Math.min(1, Math.max(0, volume)) * 0.25;
 
-  if (isError) {
+  if (isError && playErrorTone) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'triangle';

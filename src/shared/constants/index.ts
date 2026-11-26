@@ -44,10 +44,16 @@ export const THEME_OPTIONS: readonly {
   accent: string;
   isLight?: boolean;
 }[] = [
-  { id: ThemeId.OBSIDIAN_CORAL, label: 'Obsidian Coral', bg: '#0c0d10', accent: '#ff7a45' },
-  { id: ThemeId.MIDNIGHT_LAVENDER, label: 'Midnight Lavender', bg: '#0b0e17', accent: '#a78bfa' },
-  { id: ThemeId.MONOCHROME, label: 'Monochrome', bg: '#09090b', accent: '#e4e4e7' },
+  { id: ThemeId.OBSIDIAN_CORAL, label: 'Obsidian', bg: '#0c0d10', accent: '#ff7a45' },
+  { id: ThemeId.MIDNIGHT_LAVENDER, label: 'Dusk', bg: '#0b0e17', accent: '#a78bfa' },
+  { id: ThemeId.MATRIX, label: 'Matrix', bg: '#07110b', accent: '#22c55e' },
+  { id: ThemeId.OCEAN, label: 'Ocean', bg: '#07131e', accent: '#38bdf8' },
+  { id: ThemeId.ROSE, label: 'Rose', bg: '#140b12', accent: '#f472b6' },
   { id: ThemeId.PAPER, label: 'Paper', bg: '#f6f5f1', accent: '#ea580c', isLight: true },
+  { id: ThemeId.NORD, label: 'Nord', bg: '#161b24', accent: '#88c0d0' },
+  { id: ThemeId.EMBER, label: 'Ember', bg: '#140e0a', accent: '#f59e0b' },
+  { id: ThemeId.MATCHA, label: 'Matcha', bg: '#0e140f', accent: '#84cc16' },
+  { id: ThemeId.MONOCHROME, label: 'Mono', bg: '#09090b', accent: '#e4e4e7' },
 ];
 
 export const FONT_OPTIONS: readonly { id: FontFamily; label: string }[] = [
@@ -55,6 +61,15 @@ export const FONT_OPTIONS: readonly { id: FontFamily; label: string }[] = [
   { id: FontFamily.FIRA_CODE, label: 'Fira Code' },
   { id: FontFamily.GEIST_MONO, label: 'Geist Mono' },
   { id: FontFamily.SYSTEM_MONO, label: 'System Mono' },
+];
+
+export const FONT_SIZE_OPTIONS: readonly {
+  id: 'compact' | 'comfortable' | 'large';
+  label: string;
+}[] = [
+  { id: 'compact', label: 'compact' },
+  { id: 'comfortable', label: 'comfortable' },
+  { id: 'large', label: 'large' },
 ];
 
 export const SOUND_PROFILE_OPTIONS: readonly { id: SoundProfile; label: string }[] = [
@@ -86,8 +101,10 @@ export const DEFAULT_USER_PREFERENCES: UserPreferences = {
   focusFadeOut: true,
   theme: ThemeId.OBSIDIAN_CORAL,
   fontFamily: FontFamily.JETBRAINS_MONO,
+  fontSize: 'comfortable',
   soundProfile: SoundProfile.OFF,
   soundVolume: 0.5,
+  playErrorSound: true,
 };
 
 export const STORAGE_KEYS = {

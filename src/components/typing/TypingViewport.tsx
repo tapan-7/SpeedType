@@ -12,9 +12,26 @@ import {
 import type { WordEntry } from '@/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 
-const LINE_HEIGHT_PX = 60;
-const CARET_HEIGHT_PX = 42;
-const CARET_TOP_OFFSET_PX = 9;
+const FONT_SIZE_METRICS = {
+  compact: {
+    lineHeight: 46,
+    caretHeight: 32,
+    caretTopOffset: 7,
+    textClass: 'text-[24px] leading-[46px] sm:text-[28px]',
+  },
+  comfortable: {
+    lineHeight: 60,
+    caretHeight: 42,
+    caretTopOffset: 9,
+    textClass: 'text-[30px] leading-[60px] sm:text-[36px] lg:text-[40px]',
+  },
+  large: {
+    lineHeight: 70,
+    caretHeight: 48,
+    caretTopOffset: 11,
+    textClass: 'text-[34px] leading-[70px] sm:text-[42px] lg:text-[48px]',
+  },
+} as const;
 
 function getCharColorClass(status: CharacterStatus): string {
   switch (status) {
@@ -56,6 +73,9 @@ export function TypingViewport() {
   const tabPressedAtRef = useRef<number>(0);
 
   const anyModalOpen = isCustomModalOpen || isSettingsOpen || isHistoryOpen;
+  const sizeMetrics =
+    FONT_SIZE_METRICS[preferences.fontSize ?? 'comfortable'] ??
+    FONT_SIZE_METRICS.comfortable;
 
   // High-precision timer tick loop while test is running
   useEffect(() => {
@@ -126,23 +146,24 @@ export function TypingViewport() {
     if (!container || !activeWordEl) return;
 
     const wordTop = activeWordEl.offsetTop;
-    const nextScroll = wordTop > LINE_HEIGHT_PX ? wordTop - LINE_HEIGHT_PX : 0;
+    const nextScroll =
+      wordTop > sizeMetrics.lineHeight ? wordTop - sizeMetrics.lineHeight : 0;
     setScrollOffset(nextScroll);
 
     const charEl = activeCharRef.current;
     if (charEl) {
       setCaretPos({
         left: charEl.offsetLeft,
-        top: charEl.offsetTop + CARET_TOP_OFFSET_PX,
-        height: CARET_HEIGHT_PX,
+        top: charEl.offsetTop + sizeMetrics.caretTopOffset,
+        height: sizeMetrics.caretHeight,
         width: Math.max(14, charEl.offsetWidth),
       });
     } else {
       // Caret sits at the right edge of the active word (after last typed/extra char)
       setCaretPos({
         left: activeWordEl.offsetLeft + activeWordEl.offsetWidth,
-        top: activeWordEl.offsetTop + CARET_TOP_OFFSET_PX,
-        height: CARET_HEIGHT_PX,
+        top: activeWordEl.offsetTop + sizeMetrics.caretTopOffset,
+        height: sizeMetrics.caretHeight,
         width: 14,
       });
     }
@@ -150,6 +171,9 @@ export function TypingViewport() {
     engineState.currentWordIndex,
     engineState.currentCharIndex,
     engineState.words,
+    sizeMetrics.lineHeight,
+    sizeMetrics.caretHeight,
+    sizeMetrics.caretTopOffset,
   ]);
 
   const handleContainerClick = () => {
@@ -236,7 +260,7 @@ export function TypingViewport() {
 
         {/* 3-line clipped viewport */}
         <div
-          style={{ height: `${LINE_HEIGHT_PX * 3}px` }}
+          style={{ height: `${sizeMetrics.lineHeight * 3}px` }}
           className={`relative overflow-hidden transition-opacity duration-200 ${
             !isFocused && engineState.status !== TestStatus.COMPLETED
               ? 'opacity-45 blur-[1.5px]'
@@ -246,7 +270,7 @@ export function TypingViewport() {
           <div
             ref={wordsContainerRef}
             style={{ transform: `translate3d(0, -${scrollOffset}px, 0)` }}
-            className="relative flex flex-wrap content-start gap-x-5 font-mono text-[30px] leading-[60px] tracking-normal transition-transform duration-150 ease-out sm:text-[36px] lg:text-[40px]"
+            className={`relative flex flex-wrap content-start gap-x-5 font-mono tracking-normal transition-transform duration-150 ease-out ${sizeMetrics.textClass}`}
           >
             {renderCaret()}
 

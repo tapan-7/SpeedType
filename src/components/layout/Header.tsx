@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, History, Keyboard, Settings, Zap } from 'lucide-react';
+import { BarChart3, Keyboard, Settings, Zap } from 'lucide-react';
 import { APP_NAME, TestStatus, UI_STRINGS } from '@/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 import { IconButton } from '@/components/common/IconButton';
@@ -11,11 +11,9 @@ export function Header() {
   const pathname = usePathname();
   const status = useTypingStore((s) => s.engineState.status);
   const preferences = useTypingStore((s) => s.preferences);
-  const historyCount = useTypingStore((s) => s.history.length);
   const restart = useTypingStore((s) => s.restart);
   const updatePreferences = useTypingStore((s) => s.updatePreferences);
   const setSettingsOpen = useTypingStore((s) => s.setSettingsOpen);
-  const setHistoryOpen = useTypingStore((s) => s.setHistoryOpen);
 
   const isTyping =
     pathname === '/' &&
@@ -56,8 +54,8 @@ export function Header() {
       >
         <Link
           href="/stats"
-          aria-label="Analytics & weakness detector"
-          title="Analytics & Weak Keys"
+          aria-label="Analytics & history"
+          title="Stats & History"
           className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
             pathname === '/stats'
               ? 'bg-accent-soft text-accent'
@@ -83,14 +81,7 @@ export function Header() {
         </IconButton>
 
         <IconButton
-          label={`History (${historyCount})`}
-          onClick={() => setHistoryOpen(true)}
-        >
-          <History className="h-4 w-4" />
-        </IconButton>
-
-        <IconButton
-          label="Preferences"
+          label="Settings"
           onClick={() => setSettingsOpen(true)}
         >
           <Settings className="h-4 w-4" />

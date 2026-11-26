@@ -140,8 +140,8 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
 
     const nextErrors = nextState.totalKeystrokes - nextState.correctKeystrokes;
     const wasError = nextErrors > prevErrors;
-    const { soundProfile, soundVolume } = get().preferences;
-    playKeystrokeSound(soundProfile, soundVolume, wasError);
+    const { soundProfile, soundVolume, playErrorSound } = get().preferences;
+    playKeystrokeSound(soundProfile, soundVolume, wasError, playErrorSound);
 
     let lastResult = prevResult;
     let nextHistory = history;

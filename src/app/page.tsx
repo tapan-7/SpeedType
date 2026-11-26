@@ -11,8 +11,7 @@ import { TypingViewport } from '@/components/typing/TypingViewport';
 import { VirtualKeyboard } from '@/components/typing/VirtualKeyboard';
 import { CustomTextModal } from '@/components/typing/CustomTextModal';
 import { ResultsView } from '@/components/results/ResultsView';
-import { PreferencesModal } from '@/components/settings/PreferencesModal';
-import { HistoryModal } from '@/components/settings/HistoryModal';
+import { SettingsModal } from '@/components/settings/SettingsModal';
 import { ThemeSync } from '@/components/layout/ThemeSync';
 
 export default function HomePage() {
@@ -52,8 +51,7 @@ export default function HomePage() {
       <Footer />
 
       <CustomTextModal />
-      <PreferencesModal />
-      <HistoryModal />
+      <SettingsModal />
       <ThemeSync />
     </div>
   );

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Flame, Target, Trophy } from 'lucide-react';
+import { ArrowLeft, Flame, History, Target, Trash2, Trophy } from 'lucide-react';
 import {
   Area,
   AreaChart,
@@ -24,10 +24,9 @@ import {
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ThemeSync } from '@/components/layout/ThemeSync';
+import { SettingsModal } from '@/components/settings/SettingsModal';
 import { PillToggle } from '@/components/common/PillToggle';
 import { StatBadge } from '@/components/common/StatBadge';
-import { PreferencesModal } from '@/components/settings/PreferencesModal';
-import { HistoryModal } from '@/components/settings/HistoryModal';
 
 const RANGE_OPTIONS = [7, 30, 90] as const;
 
@@ -36,6 +35,7 @@ export default function StatsPage() {
   const hydrate = useTypingStore((s) => s.hydrate);
   const hydrated = useTypingStore((s) => s.hydrated);
   const history = useTypingStore((s) => s.history);
+  const clearHistory = useTypingStore((s) => s.clearHistory);
   const updateConfig = useTypingStore((s) => s.updateConfig);
 
   const [days, setDays] = useState<7 | 30 | 90>(30);
@@ -356,13 +356,63 @@ export default function StatsPage() {
                 </p>
               )}
             </section>
+
+            {/* Recent History */}
+            <section id="history" className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-text-muted">
+                  <History className="h-3.5 w-3.5 text-accent" />
+                  <span>Recent History ({history.length})</span>
+                </h2>
+                <button
+                  type="button"
+                  onClick={clearHistory}
+                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-char-error transition-colors hover:bg-char-error/10"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span>Clear History</span>
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                {history.slice(0, 20).map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/[0.025] px-5 py-3 text-xs backdrop-blur-md transition-colors hover:bg-white/[0.05]"
+                  >
+                    <div className="flex items-center gap-5">
+                      <span className="font-mono text-base font-semibold text-accent">
+                        {item.wpm}{' '}
+                        <span className="text-[10px] text-text-muted">wpm</span>
+                      </span>
+                      <span className="font-mono text-text-secondary">
+                        {item.accuracy}% acc
+                      </span>
+                      <span className="font-mono text-text-muted">
+                        {item.consistency}% cons
+                      </span>
+                      <span className="rounded-full bg-white/[0.05] px-2.5 py-0.5 font-mono text-[11px] text-text-muted">
+                        {item.configSummary}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-text-muted">
+                      {new Date(item.completedAt).toLocaleString([], {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
           </>
         )}
       </main>
 
       <Footer />
-      <PreferencesModal />
-      <HistoryModal />
+      <SettingsModal />
       <ThemeSync />
     </div>
   );

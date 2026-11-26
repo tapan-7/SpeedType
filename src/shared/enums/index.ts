@@ -34,8 +34,14 @@ export enum CodeLanguage {
 export enum ThemeId {
   OBSIDIAN_CORAL = 'obsidian-coral',
   MIDNIGHT_LAVENDER = 'midnight-lavender',
-  MONOCHROME = 'monochrome',
+  MATRIX = 'matrix',
+  OCEAN = 'ocean',
+  ROSE = 'rose',
   PAPER = 'paper',
+  NORD = 'nord',
+  EMBER = 'ember',
+  MATCHA = 'matcha',
+  MONOCHROME = 'monochrome',
 }
 
 /**
