@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ArrowRight, RotateCcw } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock, RotateCcw } from 'lucide-react';
+import { TestMode } from '@speedtype/shared';
 import {
   Area,
   AreaChart,
@@ -17,9 +18,14 @@ import { StatBadge } from '@/components/common/StatBadge';
 export function ResultsView() {
   const result = useTypingStore((s) => s.lastResult);
   const restart = useTypingStore((s) => s.restart);
+  const isCustomModalOpen = useTypingStore((s) => s.isCustomModalOpen);
+  const isSettingsOpen = useTypingStore((s) => s.isSettingsOpen);
+  const isHistoryOpen = useTypingStore((s) => s.isHistoryOpen);
+  const anyModalOpen = isCustomModalOpen || isSettingsOpen || isHistoryOpen;
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (anyModalOpen) return;
       if (e.key === 'Enter' || e.key === 'Tab') {
         e.preventDefault();
         restart();
@@ -27,15 +33,37 @@ export function ResultsView() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [restart]);
+  }, [anyModalOpen, restart]);
 
   if (!result) return null;
+
+  const isTimeMode = result.mode === TestMode.TIME;
 
   return (
     <section
       aria-label="Test results"
       className="mx-auto flex w-full max-w-4xl flex-col gap-8 rounded-2xl border border-border-subtle bg-bg-surface p-6 backdrop-blur-md sm:p-8"
     >
+      {/* Completion Banner */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle pb-4">
+        <div className="flex items-center gap-2.5">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
+            {isTimeMode ? (
+              <Clock className="h-3.5 w-3.5" />
+            ) : (
+              <CheckCircle2 className="h-3.5 w-3.5" />
+            )}
+            <span>{isTimeMode ? "Time's Up" : 'Test Complete'}</span>
+          </span>
+          <span className="text-xs text-text-muted">
+            Session finished — switch modes above or start a new test below
+          </span>
+        </div>
+        <span className="font-mono text-xs text-text-muted">
+          Press <kbd className="rounded border border-border-subtle bg-bg-elevated px-1.5 py-0.5 text-[11px] text-text-secondary">Tab</kbd> or{' '}
+          <kbd className="rounded border border-border-subtle bg-bg-elevated px-1.5 py-0.5 text-[11px] text-text-secondary">Enter</kbd> to restart
+        </span>
+      </div>
       {/* Top Hero Metrics */}
       <div className="flex flex-wrap items-center justify-between gap-6">
         <div className="flex items-center gap-10">

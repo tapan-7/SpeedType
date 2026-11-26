@@ -116,19 +116,34 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
   },
 
   handleKey: (key: string) => {
-    const { engine, history } = get();
-    const prevErrors = engine.getState().totalKeystrokes - engine.getState().correctKeystrokes;
+    const { engine, history, lastResult: prevResult } = get();
+    const prevState = engine.getState();
+    const prevErrors = prevState.totalKeystrokes - prevState.correctKeystrokes;
     const changed = engine.handleKey(key);
-    if (!changed) return;
-
     const nextState = engine.getState();
+
+    if (!changed) {
+      if (nextState.status === TestStatus.COMPLETED && prevResult === null) {
+        const result = engine.getResult();
+        const nextHistory = [result, ...history].slice(0, MAX_LOCAL_HISTORY);
+        saveToStorage(STORAGE_KEYS.HISTORY, nextHistory);
+        set({
+          engineState: nextState,
+          lastResult: result,
+          history: nextHistory,
+          activeKeyPress: null,
+        });
+      }
+      return;
+    }
+
     const nextErrors = nextState.totalKeystrokes - nextState.correctKeystrokes;
     const wasError = nextErrors > prevErrors;
 
-    let lastResult = get().lastResult;
+    let lastResult = prevResult;
     let nextHistory = history;
 
-    if (nextState.status === TestStatus.COMPLETED) {
+    if (nextState.status === TestStatus.COMPLETED && prevResult === null) {
       lastResult = engine.getResult();
       nextHistory = [lastResult, ...history].slice(0, MAX_LOCAL_HISTORY);
       saveToStorage(STORAGE_KEYS.HISTORY, nextHistory);
@@ -146,13 +161,14 @@ export const useTypingStore = create<TypingStore>((set, get) => ({
   },
 
   tick: () => {
-    const { engine, history } = get();
-    if (engine.getState().status !== TestStatus.RUNNING) return;
+    const { engine, engineState, history, lastResult } = get();
+    if (engineState.status !== TestStatus.RUNNING) return;
 
     engine.tick();
     const nextState = engine.getState();
 
     if (nextState.status === TestStatus.COMPLETED) {
+      if (lastResult !== null) return;
       const result = engine.getResult();
       const nextHistory = [result, ...history].slice(0, MAX_LOCAL_HISTORY);
       saveToStorage(STORAGE_KEYS.HISTORY, nextHistory);

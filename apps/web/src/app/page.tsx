@@ -34,7 +34,10 @@ export default function HomePage() {
         {!hydrated ? (
           <div className="h-[220px] w-full max-w-4xl" />
         ) : showResults ? (
-          <ResultsView />
+          <>
+            <ModeBar />
+            <ResultsView />
+          </>
         ) : (
           <>
             <ModeBar />
