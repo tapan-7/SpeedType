@@ -42,30 +42,41 @@ export function ResultsView() {
   return (
     <section
       aria-label="Test results"
-      className="mx-auto flex w-full max-w-4xl flex-col gap-8 rounded-2xl border border-border-subtle bg-bg-surface p-6 backdrop-blur-md sm:p-8"
+      className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-2 py-2"
     >
-      {/* Completion Banner */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle pb-4">
-        <div className="flex items-center gap-2.5">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
-            {isTimeMode ? (
-              <Clock className="h-3.5 w-3.5" />
-            ) : (
-              <CheckCircle2 className="h-3.5 w-3.5" />
-            )}
-            <span>{isTimeMode ? "Time's Up" : 'Test Complete'}</span>
-          </span>
-          <span className="text-xs text-text-muted">
-            Session finished — switch modes above or start a new test below
+      {/* Completion Header */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3.5 py-1 text-xs font-semibold text-accent backdrop-blur-md">
+              {isTimeMode ? (
+                <Clock className="h-3.5 w-3.5" />
+              ) : (
+                <CheckCircle2 className="h-3.5 w-3.5" />
+              )}
+              <span>{isTimeMode ? "Time's Up" : 'Test Complete'}</span>
+            </span>
+            <span className="text-xs text-text-muted">
+              Switch modes above or start a new test below
+            </span>
+          </div>
+          <span className="font-mono text-xs text-text-muted">
+            Press{' '}
+            <kbd className="rounded-md bg-white/[0.05] px-1.5 py-0.5 text-[11px] text-text-secondary backdrop-blur-sm">
+              Tab
+            </kbd>{' '}
+            or{' '}
+            <kbd className="rounded-md bg-white/[0.05] px-1.5 py-0.5 text-[11px] text-text-secondary backdrop-blur-sm">
+              Enter
+            </kbd>{' '}
+            to restart
           </span>
         </div>
-        <span className="font-mono text-xs text-text-muted">
-          Press <kbd className="rounded border border-border-subtle bg-bg-elevated px-1.5 py-0.5 text-[11px] text-text-secondary">Tab</kbd> or{' '}
-          <kbd className="rounded border border-border-subtle bg-bg-elevated px-1.5 py-0.5 text-[11px] text-text-secondary">Enter</kbd> to restart
-        </span>
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
       </div>
+
       {/* Top Hero Metrics */}
-      <div className="flex flex-wrap items-center justify-between gap-6">
+      <div className="flex flex-wrap items-center justify-between gap-6 px-1">
         <div className="flex items-center gap-10">
           <StatBadge label="wpm" value={result.wpm} highlight size="lg" />
           <StatBadge label="acc" value={`${result.accuracy}%`} size="lg" />
@@ -89,7 +100,7 @@ export function ResultsView() {
 
       {/* WPM Timeline Chart */}
       {result.timeline.length > 0 && (
-        <div className="h-52 w-full">
+        <div className="h-52 w-full rounded-3xl bg-white/[0.025] px-3 py-4 backdrop-blur-md">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={result.timeline}
@@ -149,38 +160,41 @@ export function ResultsView() {
       )}
 
       {/* Weak Keys & Mode Metadata */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border-subtle pt-4">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted">
-          <span className="rounded-md bg-bg-surface-hover px-2 py-1 font-mono text-text-secondary">
-            {result.configSummary}
-          </span>
-          {result.quoteAuthor && (
-            <span className="text-text-muted">— {result.quoteAuthor}</span>
-          )}
-          {result.weakKeys.length > 0 && (
-            <div className="ml-2 flex items-center gap-1.5">
-              <span>weak keys:</span>
-              {result.weakKeys.map((wk) => (
-                <span
-                  key={wk.key}
-                  className="rounded border border-char-error/30 bg-char-error/10 px-1.5 py-0.5 font-mono text-[11px] text-char-error"
-                >
-                  {wk.key === ' ' ? 'space' : wk.key} ({wk.errors})
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="flex flex-col gap-5">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
+        <div className="flex flex-wrap items-center justify-between gap-4 px-1">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted">
+            <span className="rounded-full bg-white/[0.04] px-3 py-1 font-mono text-text-secondary backdrop-blur-sm">
+              {result.configSummary}
+            </span>
+            {result.quoteAuthor && (
+              <span className="text-text-muted">— {result.quoteAuthor}</span>
+            )}
+            {result.weakKeys.length > 0 && (
+              <div className="ml-2 flex items-center gap-1.5">
+                <span>weak keys:</span>
+                {result.weakKeys.map((wk) => (
+                  <span
+                    key={wk.key}
+                    className="rounded-full bg-char-error/10 px-2 py-0.5 font-mono text-[11px] text-char-error backdrop-blur-sm"
+                  >
+                    {wk.key === ' ' ? 'space' : wk.key} ({wk.errors})
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
 
-        <button
-          type="button"
-          onClick={restart}
-          className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-xs font-semibold text-bg-primary transition-opacity hover:opacity-90"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          <span>Next Test</span>
-          <ArrowRight className="h-3.5 w-3.5" />
-        </button>
+          <button
+            type="button"
+            onClick={restart}
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-xs font-semibold text-bg-primary shadow-[0_0_20px_rgba(255,122,69,0.25)] transition-all hover:opacity-90"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            <span>Next Test</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
       </div>
     </section>
   );

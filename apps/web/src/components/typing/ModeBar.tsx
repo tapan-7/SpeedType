@@ -26,7 +26,7 @@ export function ModeBar() {
 
   return (
     <div
-      className={`mx-auto flex max-w-full flex-wrap items-center justify-center gap-1 rounded-xl border border-border-subtle bg-bg-surface px-2.5 py-1.5 backdrop-blur-md transition-opacity duration-300 ${
+      className={`mx-auto flex max-w-full flex-wrap items-center justify-center gap-1 rounded-full bg-white/[0.03] px-3 py-1.5 backdrop-blur-md transition-opacity duration-300 ${
         isTyping ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
