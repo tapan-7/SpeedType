@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, Keyboard, Settings, Zap } from 'lucide-react';
-import { APP_NAME, TestStatus, UI_STRINGS } from '@/shared';
+import { BarChart3, Keyboard, Settings } from 'lucide-react';
+import { TestStatus, UI_STRINGS } from '@/shared';
 import { useTypingStore } from '@/stores/useTypingStore';
 import { IconButton } from '@/components/common/IconButton';
+import { SpeedTypeLogo } from '@/components/common/SpeedTypeLogo';
 
 export function Header() {
   const pathname = usePathname();
@@ -27,23 +28,9 @@ export function Header() {
         onClick={() => {
           if (pathname === '/') restart();
         }}
-        className="group flex items-center gap-2.5 text-left focus:outline-none"
+        className="group flex items-center text-left focus:outline-none"
       >
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-border-subtle bg-bg-surface text-accent transition-transform duration-150 group-hover:scale-105">
-          <Zap className="h-4 w-4 fill-accent/20" />
-        </span>
-        <div className="flex flex-col">
-          <span className="text-base font-semibold tracking-tight text-text-primary">
-            {APP_NAME}
-          </span>
-          <span
-            className={`text-[10px] font-medium uppercase tracking-widest text-text-muted transition-opacity duration-300 ${
-              isTyping ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            practice
-          </span>
-        </div>
+        <SpeedTypeLogo />
       </Link>
 
       <nav
