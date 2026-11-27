@@ -27,7 +27,7 @@ export function Header() {
   };
 
   return (
-    <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
+    <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-10 sm:py-5">
       <button
         type="button"
         onClick={handleLogoClick}
@@ -50,21 +50,23 @@ export function Header() {
         >
           <BarChart3 className="h-4 w-4" />
         </IconButton>
-        <IconButton
-          label={
-            preferences.showVirtualKeyboard
-              ? UI_STRINGS.KEYBOARD_TOGGLE_HIDE
-              : UI_STRINGS.KEYBOARD_TOGGLE_SHOW
-          }
-          active={preferences.showVirtualKeyboard}
-          onClick={() =>
-            updatePreferences({
-              showVirtualKeyboard: !preferences.showVirtualKeyboard,
-            })
-          }
-        >
-          <Keyboard className="h-4 w-4" />
-        </IconButton>
+        <span className="hidden sm:inline-flex">
+          <IconButton
+            label={
+              preferences.showVirtualKeyboard
+                ? UI_STRINGS.KEYBOARD_TOGGLE_HIDE
+                : UI_STRINGS.KEYBOARD_TOGGLE_SHOW
+            }
+            active={preferences.showVirtualKeyboard}
+            onClick={() =>
+              updatePreferences({
+                showVirtualKeyboard: !preferences.showVirtualKeyboard,
+              })
+            }
+          >
+            <Keyboard className="h-4 w-4" />
+          </IconButton>
+        </span>
 
         <IconButton
           label="Settings"

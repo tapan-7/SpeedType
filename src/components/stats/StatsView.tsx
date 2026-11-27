@@ -382,7 +382,7 @@ export function StatsView() {
                   key={item.id}
                   className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/[0.025] px-5 py-3 text-xs backdrop-blur-md transition-colors hover:bg-white/[0.05]"
                 >
-                  <div className="flex items-center gap-5">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 sm:gap-5">
                     <span className="font-mono text-base font-semibold text-accent">
                       {item.wpm}{' '}
                       <span className="text-[10px] text-text-muted">wpm</span>
@@ -393,7 +393,7 @@ export function StatsView() {
                     <span className="font-mono text-text-muted">
                       {item.consistency}% cons
                     </span>
-                    <span className="rounded-full bg-white/[0.05] px-2.5 py-0.5 font-mono text-[11px] text-text-muted">
+                    <span className="whitespace-nowrap rounded-full bg-white/[0.05] px-2.5 py-0.5 font-mono text-[11px] text-text-muted">
                       {item.configSummary}
                     </span>
                   </div>

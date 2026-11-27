@@ -60,7 +60,7 @@ export function ResultsView() {
               Switch modes above or start a new test below
             </span>
           </div>
-          <span className="font-mono text-xs text-text-muted">
+          <span className="hidden font-mono text-xs text-text-muted sm:inline">
             Press{' '}
             <kbd className="rounded-md bg-white/[0.05] px-1.5 py-0.5 text-[11px] text-text-secondary backdrop-blur-sm">
               Tab
@@ -77,12 +77,12 @@ export function ResultsView() {
 
       {/* Top Hero Metrics */}
       <div className="flex flex-wrap items-center justify-between gap-6 px-1">
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-6 sm:gap-10">
           <StatBadge label="wpm" value={result.wpm} highlight size="lg" />
           <StatBadge label="acc" value={`${result.accuracy}%`} size="lg" />
         </div>
 
-        <div className="flex flex-wrap items-center gap-8">
+        <div className="flex flex-wrap items-center gap-5 sm:gap-8">
           <StatBadge label="raw" value={result.rawWpm} />
           <StatBadge label="consistency" value={`${result.consistency}%`} />
           <StatBadge label="time" value={`${result.elapsedSeconds}s`} />

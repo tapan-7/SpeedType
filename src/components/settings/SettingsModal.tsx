@@ -76,11 +76,21 @@ export function SettingsModal() {
       }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-md"
     >
-      <div className="flex h-[660px] max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-border-subtle bg-bg-elevated/90 shadow-2xl backdrop-blur-2xl">
-        {/* Left Sidebar */}
-        <aside className="flex w-56 shrink-0 flex-col gap-4 border-r border-border-subtle bg-black/15 p-4 sm:w-64">
-          <div className="px-2 pt-1 text-base font-semibold tracking-tight text-text-primary">
-            Settings
+      <div className="flex h-[88vh] max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-border-subtle bg-bg-elevated/90 shadow-2xl backdrop-blur-2xl md:h-[660px] md:flex-row">
+        {/* Left Sidebar (Top Nav on mobile) */}
+        <aside className="flex w-full shrink-0 flex-col gap-3 border-b border-border-subtle bg-black/15 p-4 md:w-64 md:gap-4 md:border-b-0 md:border-r">
+          <div className="flex items-center justify-between px-1 pt-0.5 md:px-2 md:pt-1">
+            <span className="text-base font-semibold tracking-tight text-text-primary">
+              Settings
+            </span>
+            <button
+              type="button"
+              onClick={() => setSettingsOpen(false)}
+              aria-label="Close settings"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.05] text-text-muted transition-colors hover:bg-white/[0.1] hover:text-text-primary md:hidden"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
 
           <div className="relative">
@@ -95,7 +105,10 @@ export function SettingsModal() {
             />
           </div>
 
-          <nav aria-label="Settings categories" className="flex flex-col gap-1">
+          <nav
+            aria-label="Settings categories"
+            className="flex flex-row gap-1 overflow-x-auto md:flex-col"
+          >
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = !isSearching && activeTab === tab.id;
@@ -107,7 +120,7 @@ export function SettingsModal() {
                     setQuery('');
                     setActiveTab(tab.id);
                   }}
-                  className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors ${
+                  className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-left text-xs font-medium transition-colors md:gap-2.5 ${
                     isActive
                       ? 'bg-white/[0.09] text-text-primary'
                       : 'text-text-secondary hover:bg-white/[0.04] hover:text-text-primary'
@@ -127,7 +140,7 @@ export function SettingsModal() {
 
         {/* Right Content Pane */}
         <div className="flex flex-1 flex-col overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4">
+          <div className="hidden items-center justify-between px-6 py-4 md:flex">
             <h2 className="text-base font-semibold text-text-primary">
               {isSearching
                 ? `Search: "${query}"`
@@ -143,7 +156,7 @@ export function SettingsModal() {
             </button>
           </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4 md:px-6 md:pt-0 md:pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {showAppearance && (
               <>
                 {matches('theme color palette') && (
@@ -356,7 +369,7 @@ export function SettingsModal() {
                         Click to preview
                       </span>
                     </div>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                       {SOUND_PROFILE_OPTIONS.map((opt) => {
                         const active = preferences.soundProfile === opt.id;
                         return (

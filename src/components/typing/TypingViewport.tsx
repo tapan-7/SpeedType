@@ -17,19 +17,19 @@ const FONT_SIZE_METRICS = {
     lineHeight: 46,
     caretHeight: 32,
     caretTopOffset: 7,
-    textClass: 'text-[24px] leading-[46px] sm:text-[28px]',
+    textClass: 'text-[20px] leading-[46px] sm:text-[26px] lg:text-[28px]',
   },
   comfortable: {
     lineHeight: 60,
     caretHeight: 42,
     caretTopOffset: 9,
-    textClass: 'text-[30px] leading-[60px] sm:text-[36px] lg:text-[40px]',
+    textClass: 'text-[24px] leading-[60px] sm:text-[34px] lg:text-[40px]',
   },
   large: {
     lineHeight: 70,
     caretHeight: 48,
     caretTopOffset: 11,
-    textClass: 'text-[34px] leading-[70px] sm:text-[42px] lg:text-[48px]',
+    textClass: 'text-[28px] leading-[70px] sm:text-[40px] lg:text-[48px]',
   },
 } as const;
 

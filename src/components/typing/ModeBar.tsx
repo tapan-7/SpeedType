@@ -27,7 +27,7 @@ export function ModeBar() {
 
   return (
     <div
-      className={`mx-auto flex max-w-full flex-wrap items-center justify-center gap-1 rounded-full bg-white/[0.03] px-3 py-1.5 backdrop-blur-md transition-opacity duration-300 ${
+      className={`mx-auto flex max-w-full flex-wrap items-center justify-center gap-1 rounded-2xl bg-white/[0.03] px-3 py-1.5 backdrop-blur-md transition-opacity duration-300 sm:rounded-full ${
         isTyping ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
@@ -54,7 +54,7 @@ export function ModeBar() {
           </div>
           <span
             aria-hidden="true"
-            className="mx-1.5 h-4 w-px bg-border-subtle"
+            className="mx-1.5 hidden h-4 w-px bg-border-subtle sm:inline-block"
           />
         </>
       )}
@@ -71,7 +71,10 @@ export function ModeBar() {
         ))}
       </div>
 
-      <span aria-hidden="true" className="mx-1.5 h-4 w-px bg-border-subtle" />
+      <span
+        aria-hidden="true"
+        className="mx-1.5 hidden h-4 w-px bg-border-subtle sm:inline-block"
+      />
 
       <div className="flex items-center gap-0.5">
         {config.mode === TestMode.TIME &&

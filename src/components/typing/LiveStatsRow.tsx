@@ -28,7 +28,7 @@ export function LiveStatsRow() {
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-4">
-      <div className="flex items-center justify-center gap-12 sm:gap-20">
+      <div className="flex items-center justify-center gap-8 sm:gap-20">
         <StatBadge
           label="wpm"
           value={isRunning ? liveWpm : '—'}
