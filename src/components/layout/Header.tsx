@@ -14,19 +14,25 @@ export function Header() {
   const updatePreferences = useTypingStore((s) => s.updatePreferences);
   const setSettingsOpen = useTypingStore((s) => s.setSettingsOpen);
   const setStatsOpen = useTypingStore((s) => s.setStatsOpen);
+  const setCustomModalOpen = useTypingStore((s) => s.setCustomModalOpen);
 
   const isTyping =
     !isStatsOpen && status === TestStatus.RUNNING && preferences.focusFadeOut;
+
+  const handleLogoClick = () => {
+    setStatsOpen(false);
+    setSettingsOpen(false);
+    setCustomModalOpen(false);
+    restart();
+  };
 
   return (
     <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
       <button
         type="button"
-        onClick={() => {
-          setStatsOpen(false);
-          restart();
-        }}
-        className="group flex items-center text-left focus:outline-none"
+        onClick={handleLogoClick}
+        aria-label="SpeedType — Return to initial state"
+        className="group flex cursor-pointer items-center text-left focus:outline-none"
       >
         <SpeedTypeLogo />
       </button>

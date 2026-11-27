@@ -1,4 +1,8 @@
-export function SpeedTypeIcon({ className = 'h-8 w-10' }: { className?: string }) {
+export function SpeedTypeIcon({
+  className = "h-8 w-10",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +20,11 @@ export function SpeedTypeIcon({ className = 'h-8 w-10' }: { className?: string }
           y2="4"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0%" stopColor="var(--st-accent-primary)" stopOpacity={0.55} />
+          <stop
+            offset="0%"
+            stopColor="var(--st-accent-primary)"
+            stopOpacity={0.55}
+          />
           <stop offset="50%" stopColor="var(--st-accent-secondary)" />
           <stop offset="100%" stopColor="var(--st-accent-primary)" />
         </linearGradient>
@@ -35,10 +43,38 @@ export function SpeedTypeIcon({ className = 'h-8 w-10' }: { className?: string }
 
       {/* Slanted keyboard keycaps */}
       <g transform="skewX(-18)">
-        <rect x="20.5" y="28.5" width="7.2" height="4.2" rx="1.3" fill="url(#stMarkGrad)" />
-        <rect x="29.5" y="28.5" width="7.2" height="4.2" rx="1.3" fill="url(#stMarkGrad)" />
-        <rect x="18" y="34.5" width="7.2" height="4.2" rx="1.3" fill="url(#stMarkGrad)" />
-        <rect x="27" y="34.5" width="7.2" height="4.2" rx="1.3" fill="url(#stMarkGrad)" />
+        <rect
+          x="20.5"
+          y="28.5"
+          width="7.2"
+          height="4.2"
+          rx="1.3"
+          fill="url(#stMarkGrad)"
+        />
+        <rect
+          x="29.5"
+          y="28.5"
+          width="7.2"
+          height="4.2"
+          rx="1.3"
+          fill="url(#stMarkGrad)"
+        />
+        <rect
+          x="18"
+          y="34.5"
+          width="7.2"
+          height="4.2"
+          rx="1.3"
+          fill="url(#stMarkGrad)"
+        />
+        <rect
+          x="27"
+          y="34.5"
+          width="7.2"
+          height="4.2"
+          rx="1.3"
+          fill="url(#stMarkGrad)"
+        />
       </g>
     </svg>
   );
@@ -46,8 +82,8 @@ export function SpeedTypeIcon({ className = 'h-8 w-10' }: { className?: string }
 
 export function SpeedTypeLogo() {
   return (
-    <div className="flex items-center gap-2">
-      <SpeedTypeIcon className="h-8 w-10 transition-transform duration-150 group-hover:scale-105" />
+    <div className="flex items-center">
+      <SpeedTypeIcon className="h-8 w-10" />
       <span className="font-sans text-xl font-extrabold italic tracking-tight">
         <span className="text-text-primary">Speed</span>
         <span className="text-accent">Type</span>
@@ -55,4 +91,3 @@ export function SpeedTypeLogo() {
     </div>
   );
 }
-
