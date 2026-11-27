@@ -76,11 +76,19 @@ export const FONT_SIZE_OPTIONS: readonly {
   { id: 'large', label: 'large' },
 ];
 
-export const SOUND_PROFILE_OPTIONS: readonly { id: SoundProfile; label: string }[] = [
-  { id: SoundProfile.OFF, label: 'off' },
-  { id: SoundProfile.MECHANICAL, label: 'mechanical' },
-  { id: SoundProfile.SOFT, label: 'soft' },
-  { id: SoundProfile.TYPEWRITER, label: 'typewriter' },
+export const SOUND_PROFILE_OPTIONS: readonly {
+  id: SoundProfile;
+  label: string;
+  hint: string;
+}[] = [
+  { id: SoundProfile.OFF, label: 'Off', hint: 'Silent' },
+  { id: SoundProfile.MECHANICAL, label: 'Mechanical', hint: 'Crisp click' },
+  { id: SoundProfile.THOCK, label: 'Thock', hint: 'Deep creamy' },
+  { id: SoundProfile.SOFT, label: 'Soft', hint: 'Muted press' },
+  { id: SoundProfile.TYPEWRITER, label: 'Typewriter', hint: 'Sharp strike' },
+  { id: SoundProfile.POP, label: 'Pop', hint: 'Bubbly tap' },
+  { id: SoundProfile.BEEP, label: 'Beep', hint: 'Retro blip' },
+  { id: SoundProfile.CRYSTAL, label: 'Crystal', hint: 'Glass chime' },
 ];
 
 export const DEFAULT_CUSTOM_TEXT =

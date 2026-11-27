@@ -64,8 +64,12 @@ export enum FontFamily {
 export enum SoundProfile {
   OFF = 'off',
   MECHANICAL = 'mechanical',
+  THOCK = 'thock',
   SOFT = 'soft',
   TYPEWRITER = 'typewriter',
+  POP = 'pop',
+  BEEP = 'beep',
+  CRYSTAL = 'crystal',
 }
 
 /**

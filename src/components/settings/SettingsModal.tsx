@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Keyboard, Palette, Search, Volume2, X } from 'lucide-react';
+import { Keyboard, Palette, Search, Volume2, VolumeX, X } from 'lucide-react';
 import {
   CaretStyle,
   FONT_OPTIONS,
@@ -345,73 +345,118 @@ export function SettingsModal() {
             )}
 
             {showSound && (
-              <div className="flex flex-col gap-5 rounded-2xl border border-border-subtle bg-white/[0.02] p-5">
-                <div className="text-xs font-medium text-text-secondary">
-                  Audio feedback
-                </div>
-
-                {matches('keystroke sound profile mechanical soft typewriter') && (
-                  <SettingRow
-                    title="Keystroke sound"
-                    description="Synthesized audio feedback on each key press"
-                  >
-                    <div className="flex flex-wrap items-center gap-1 rounded-full bg-white/[0.04] p-1">
-                      {SOUND_PROFILE_OPTIONS.map((opt) => (
-                        <PillToggle
-                          key={opt.id}
-                          active={preferences.soundProfile === opt.id}
-                          onClick={() => {
-                            updatePreferences({ soundProfile: opt.id });
-                            playKeystrokeSound(
-                              opt.id,
-                              preferences.soundVolume,
-                              false,
-                              preferences.playErrorSound,
-                            );
-                          }}
-                        >
-                          {opt.label}
-                        </PillToggle>
-                      ))}
+              <>
+                {matches('keystroke sound profile mechanical thock soft typewriter pop beep crystal') && (
+                  <div className="rounded-2xl border border-border-subtle bg-white/[0.02] p-4">
+                    <div className="mb-3 flex items-center justify-between">
+                      <span className="text-xs font-medium text-text-secondary">
+                        Keystroke sound profile
+                      </span>
+                      <span className="text-[11px] text-text-muted">
+                        Click to preview
+                      </span>
                     </div>
-                  </SettingRow>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {SOUND_PROFILE_OPTIONS.map((opt) => {
+                        const active = preferences.soundProfile === opt.id;
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            onClick={() => {
+                              updatePreferences({ soundProfile: opt.id });
+                              playKeystrokeSound(
+                                opt.id,
+                                preferences.soundVolume,
+                                false,
+                                preferences.playErrorSound,
+                              );
+                            }}
+                            className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs transition-all duration-150 focus:outline-none ${
+                              active
+                                ? 'bg-white/[0.08] font-medium text-text-primary ring-1 ring-accent/50'
+                                : 'bg-white/[0.02] text-text-secondary hover:bg-white/[0.05] hover:text-text-primary'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              {opt.id === SoundProfile.OFF ? (
+                                <VolumeX className="h-3.5 w-3.5 text-text-muted" />
+                              ) : (
+                                <Volume2
+                                  className={`h-3.5 w-3.5 ${
+                                    active ? 'text-accent' : 'text-text-muted'
+                                  }`}
+                                />
+                              )}
+                              <span>{opt.label}</span>
+                            </div>
+                            <span className="text-[11px] text-text-muted">
+                              {opt.hint}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
                 )}
 
-                {preferences.soundProfile !== SoundProfile.OFF &&
-                  matches('volume') && (
-                    <SettingRow
-                      title="Volume"
-                      description={`${Math.round(preferences.soundVolume * 100)}%`}
+                {matches('volume distinct error tone') && (
+                    <div
+                      className={`flex flex-col gap-4 rounded-2xl border border-border-subtle bg-white/[0.02] p-4 transition-opacity ${
+                        preferences.soundProfile === SoundProfile.OFF
+                          ? 'pointer-events-none opacity-45'
+                          : 'opacity-100'
+                      }`}
                     >
-                      <input
-                        type="range"
-                        min={0.1}
-                        max={1}
-                        step={0.05}
-                        value={preferences.soundVolume}
-                        onChange={(e) =>
-                          updatePreferences({
-                            soundVolume: Number(e.target.value),
-                          })
-                        }
-                        aria-label="Keystroke sound volume"
-                        className="h-1.5 w-44 accent-accent"
-                      />
-                    </SettingRow>
-                  )}
+                      <div className="flex items-center justify-between text-xs font-medium text-text-secondary">
+                        <span>Audio controls</span>
+                        {preferences.soundProfile === SoundProfile.OFF && (
+                          <span className="text-[11px] font-normal text-text-muted">
+                            Select a sound profile above to enable
+                          </span>
+                        )}
+                      </div>
 
-                {preferences.soundProfile !== SoundProfile.OFF &&
-                  matches('distinct error tone') && (
-                    <SettingToggle
-                      title="Distinct error tone"
-                      description="Play a subtle low tone on incorrect characters"
-                      checked={preferences.playErrorSound}
-                      onChange={(val) =>
-                        updatePreferences({ playErrorSound: val })
-                      }
-                    />
+                      {matches('volume') && (
+                        <SettingRow
+                          title="Volume"
+                          description="Output level for keystroke audio"
+                        >
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="range"
+                              min={0.1}
+                              max={1}
+                              step={0.05}
+                              value={preferences.soundVolume}
+                              onChange={(e) =>
+                                updatePreferences({
+                                  soundVolume: Number(e.target.value),
+                                })
+                              }
+                              aria-label="Keystroke sound volume"
+                              className="h-1.5 w-40 accent-accent"
+                            />
+                            <span className="w-10 text-right font-mono text-xs text-text-secondary">
+                              {Math.round(preferences.soundVolume * 100)}%
+                            </span>
+                          </div>
+                        </SettingRow>
+                      )}
+
+                      {matches('distinct error tone') && (
+                        <SettingToggle
+                          title="Distinct error tone"
+                          description="Play a subtle low tone on incorrect characters"
+                          checked={preferences.playErrorSound}
+                          onChange={(val) =>
+                            updatePreferences({ playErrorSound: val })
+                          }
+                        />
+                      )}
+                    </div>
                   )}
-              </div>
+              </>
             )}
 
             {isSearching && !showAppearance && !showTyping && !showSound && (

@@ -80,6 +80,17 @@ export function playKeystrokeSound(
     osc.frequency.exponentialRampToValueAtTime(85, now + 0.025);
     oscGain.gain.setValueAtTime(gainLevel * 0.65, now);
     oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+  } else if (profile === SoundProfile.THOCK) {
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(420, now);
+    noiseGain.gain.setValueAtTime(gainLevel * 0.75, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(145, now);
+    osc.frequency.exponentialRampToValueAtTime(52, now + 0.038);
+    oscGain.gain.setValueAtTime(gainLevel * 0.95, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
   } else if (profile === SoundProfile.SOFT) {
     filter.type = 'lowpass';
     filter.frequency.setValueAtTime(650, now);
@@ -91,6 +102,38 @@ export function playKeystrokeSound(
     osc.frequency.exponentialRampToValueAtTime(70, now + 0.02);
     oscGain.gain.setValueAtTime(gainLevel * 0.45, now);
     oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.022);
+  } else if (profile === SoundProfile.POP) {
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(900, now);
+    noiseGain.gain.setValueAtTime(gainLevel * 0.2, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.018);
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(260, now);
+    osc.frequency.exponentialRampToValueAtTime(540, now + 0.024);
+    oscGain.gain.setValueAtTime(gainLevel * 0.75, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+  } else if (profile === SoundProfile.BEEP) {
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1200, now);
+    noiseGain.gain.setValueAtTime(0.001, now);
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(680, now);
+    osc.frequency.exponentialRampToValueAtTime(440, now + 0.025);
+    oscGain.gain.setValueAtTime(gainLevel * 0.5, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+  } else if (profile === SoundProfile.CRYSTAL) {
+    filter.type = 'highpass';
+    filter.frequency.setValueAtTime(3200, now);
+    noiseGain.gain.setValueAtTime(gainLevel * 0.25, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1320, now);
+    osc.frequency.exponentialRampToValueAtTime(980, now + 0.035);
+    oscGain.gain.setValueAtTime(gainLevel * 0.45, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
   } else {
     // TYPEWRITER
     filter.type = 'highpass';
