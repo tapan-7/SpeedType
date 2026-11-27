@@ -326,6 +326,15 @@
   --font-mono: var(--st-font-typing);
 }
 
+@layer base {
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='switch']:not(:disabled),
+  a[href] {
+    cursor: pointer;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
